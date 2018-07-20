@@ -11,3 +11,16 @@ interests
 
 search
 
+home
+
+favorites
+
+trending
+
+rate
+
+share
+
+comment
+
+
