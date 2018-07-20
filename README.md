@@ -17,3 +17,10 @@ favorites
 
 trending
 
+rate
+
+share
+
+comment
+
+
