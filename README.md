@@ -15,3 +15,5 @@ home
 
 favorites
 
+trending
+
