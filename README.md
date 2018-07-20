@@ -4,3 +4,4 @@
 master
 login-out
 register
+interests
