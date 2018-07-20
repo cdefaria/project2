@@ -13,3 +13,5 @@ search
 
 home
 
+favorites
+
