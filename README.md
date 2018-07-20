@@ -17,3 +17,5 @@ favorites
 
 trending
 
+rate
+
