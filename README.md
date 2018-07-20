@@ -1,7 +1,7 @@
 # project2
 
 # Branches
-master
-login-out
-register
-interests
+master\n
+login-out\n
+register\n
+interests\n
