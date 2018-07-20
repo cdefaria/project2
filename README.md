@@ -8,3 +8,6 @@ login-out
 register
 
 interests
+
+search
+
