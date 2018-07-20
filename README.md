@@ -19,3 +19,8 @@ trending
 
 rate
 
+share
+
+comment
+
+
