@@ -3,6 +3,8 @@
 # Branches
 master
 
+dev
+
 login-out
 
 register
