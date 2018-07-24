@@ -3,7 +3,7 @@ window.onload = function () {
 }
 
 // Logging In
-function loadLogin() {
+function loadPartial() {
 	// console.log('in loadLogin()');
 	
 	let xhr = new XMLHttpRequest();
