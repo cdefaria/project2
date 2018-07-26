@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Entity
 @Component
-@Table(name="Article")
+@Table(name="ARTICLES")
 @SequenceGenerator(name="ArticleSeq", sequenceName="Article_SEQ", allocationSize=1)
 public class Article {
 	@Id
