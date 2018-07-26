@@ -1,63 +1,67 @@
-package com.revature.model;
+package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 @Table(name="USERS")
-public class Users {
-	
+@SequenceGenerator(name="userSeq", sequenceName="USER_SEQ", allocationSize=1)
+public class User {	
 	@Id
 	@Column(name="user_id")
-	private int userId;
-	
-	//added password
-	//@NotNull
-	@Column(name="password")
-	private String password;
-	
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="userSeq")
+	private int user_id;
 	
 	@Column(name="username")
 	private String username;
 	
-	//@Email
-	@Column(name="email")
+	
+	@Column(name="email")	
 	private String email;
+
 	
 	@Column(name="firstname")
-	private String firtname;
+	private String firstname;
+
 	
 	@Column(name="lastname")
 	private String lastname;
-	
-	Users() {}
 
-	public Users(String username, String email, String firtname, String lastname) {
+	public User() {
+		System.out.println("[DEBUG] - User instantiated...");
+	}
+
+	public User(String username, String email, String firstname, String lastname) {
 		super();
 		this.username = username;
 		this.email = email;
-		this.firtname = firtname;
+		this.firstname = firstname;
 		this.lastname = lastname;
 	}
 
-	public Users(int userId, String username, String email, String firtname, String lastname) {
+	public User(int user_id, String username, String email, String firstname, String lastname) {
 		super();
-		this.userId = userId;
+		this.user_id = user_id;
 		this.username = username;
 		this.email = email;
-		this.firtname = firtname;
+		this.firstname = firstname;
 		this.lastname = lastname;
 	}
 
-	
-	public int getUserId() {
-		return userId;
+	public int getUser_id() {
+		return user_id;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 
 	public String getUsername() {
@@ -76,12 +80,12 @@ public class Users {
 		this.email = email;
 	}
 
-	public String getFirtname() {
-		return firtname;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setFirtname(String firtname) {
-		this.firtname = firtname;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	public String getLastname() {
@@ -97,9 +101,9 @@ public class Users {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firtname == null) ? 0 : firtname.hashCode());
+		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result + userId;
+		result = prime * result + user_id;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -112,23 +116,23 @@ public class Users {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Users other = (Users) obj;
+		User other = (User) obj;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (firtname == null) {
-			if (other.firtname != null)
+		if (firstname == null) {
+			if (other.firstname != null)
 				return false;
-		} else if (!firtname.equals(other.firtname))
+		} else if (!firstname.equals(other.firstname))
 			return false;
 		if (lastname == null) {
 			if (other.lastname != null)
 				return false;
 		} else if (!lastname.equals(other.lastname))
 			return false;
-		if (userId != other.userId)
+		if (user_id != other.user_id)
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -140,9 +144,7 @@ public class Users {
 
 	@Override
 	public String toString() {
-		return "Users [userId=" + userId + ", username=" + username + ", email=" + email + ", firtname=" + firtname
+		return "User [user_id=" + user_id + ", username=" + username + ", email=" + email + ", firstname=" + firstname
 				+ ", lastname=" + lastname + "]";
 	}
-	
-	
 }
