@@ -7,7 +7,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.beans.Article;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ArticleRepository {
 	
 	static {

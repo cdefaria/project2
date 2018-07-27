@@ -7,6 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Unique;
+
 
 import org.springframework.stereotype.Component;
 
@@ -23,7 +27,9 @@ public class User {
 	@Column(name="username")
 	private String username;
 	
-	
+	@NotNull
+	//@Unique
+	@Email
 	@Column(name="email")	
 	private String email;
 
