@@ -5,9 +5,11 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Interest;
 
+@Repository
 public class InterestRepository {
 
 	static {
@@ -21,7 +23,8 @@ public class InterestRepository {
 		
 		System.out.println("[DEBUG] - InterestRepository.getAll...");
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from Article", Interest.class).getResultList();
+		return session.createQuery("from Interest", Interest.class).getResultList();
+	
 	}
 	
 	public Interest getById(int id) {
