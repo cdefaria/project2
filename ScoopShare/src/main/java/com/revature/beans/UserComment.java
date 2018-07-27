@@ -1,4 +1,4 @@
-package com.revature.model;
+package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="USER_COMMENTS")
-public class UserComments {
+public class UserComment {
 
 	@Id
 	@Column(name="comment_id")
@@ -23,16 +23,16 @@ public class UserComments {
 	@Column(name="u_comment")
 	private String comments;
 	
-	public UserComments() {}
+	public UserComment() {}
 	
-	public UserComments(int userId, int articleId, String comments) {
+	public UserComment(int userId, int articleId, String comments) {
 		super();
 		this.userId = userId;
 		this.articleId = articleId;
 		this.comments = comments;
 	}
 
-	public UserComments(int commentId, int userId, int articleId, String comments) {
+	public UserComment(int commentId, int userId, int articleId, String comments) {
 		super();
 		this.commentId = commentId;
 		this.userId = userId;
@@ -91,7 +91,7 @@ public class UserComments {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserComments other = (UserComments) obj;
+		UserComment other = (UserComment) obj;
 		if (articleId != other.articleId)
 			return false;
 		if (commentId != other.commentId)

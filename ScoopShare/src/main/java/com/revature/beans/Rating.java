@@ -1,4 +1,6 @@
-package com.revature.model;
+package com.revature.beans;
+
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,11 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity
-//@Component
+@Component
 @Table(name="RATINGS")
-public class Ratings {
-	
+public class Rating implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -24,11 +29,11 @@ public class Ratings {
 	@Column(name="rating")
 	private int rating;
 	
-	public Ratings() {
+	public Rating() {
 		
 	}
 
-	public Ratings(int userId, int articleId, int rating) {
+	public Rating(int userId, int articleId, int rating) {
 		super();
 		this.userId = userId;
 		this.articleId = articleId;
@@ -77,7 +82,7 @@ public class Ratings {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Ratings other = (Ratings) obj;
+		Rating other = (Rating) obj;
 		if (articleId != other.articleId)
 			return false;
 		if (rating != other.rating)

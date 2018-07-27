@@ -1,34 +1,42 @@
-package com.revature.model;
+package com.revature.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 @Table(name="INTERESTS")
-public class Interests {
+@SequenceGenerator(name="interestSeq", sequenceName="INTEREST_SEQ", allocationSize=1)
+public class Interest {
 	
 	@Id
 	@Column(name = "interest_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="interestSeq")
 	private int interestId;
 	
 	@Column(name = "interest_name")
 	private String interestName;
 	
 	
-	public Interests() {}
+	public Interest() {}
 
 	
 	
-	public Interests(String interestName) {
+	public Interest(String interestName) {
 		super();
 		this.interestName = interestName;
 	}
 
 
 
-	public Interests(int interestId, String interestName) {
+	public Interest(int interestId, String interestName) {
 		super();
 		this.interestId = interestId;
 		this.interestName = interestName;
@@ -73,7 +81,7 @@ public class Interests {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Interests other = (Interests) obj;
+		Interest other = (Interest) obj;
 		if (interestId != other.interestId)
 			return false;
 		if (interestName == null) {
