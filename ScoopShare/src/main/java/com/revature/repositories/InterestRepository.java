@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.beans.Interest;
 
+
 public class InterestRepository {
 
 	static {

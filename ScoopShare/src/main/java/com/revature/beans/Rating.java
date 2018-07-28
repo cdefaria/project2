@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
@@ -18,12 +19,12 @@ public class Rating implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="user_id")
+	@JoinColumn(name="user_id")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int userId;
 	
 	@Id
-	@Column(name="article_id")
+	@JoinColumn(name="article_id")
 	private int articleId;
 	
 	@Column(name="rating")
