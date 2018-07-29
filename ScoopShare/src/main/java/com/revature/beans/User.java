@@ -27,6 +27,9 @@ public class User {
 	@Column(name="username")
 	private String username;
 	
+	@Column(name="password")
+	private String password;
+	
 	@NotNull
 	//@Unique
 	@Email
@@ -45,6 +48,7 @@ public class User {
 		System.out.println("[DEBUG] - User instantiated...");
 	}
 
+	
 	public User(String username, String email, String firstname, String lastname) {
 		super();
 		this.username = username;
@@ -61,7 +65,7 @@ public class User {
 		this.firstname = firstname;
 		this.lastname = lastname;
 	}
-
+	
 	public int getUser_id() {
 		return user_id;
 	}
