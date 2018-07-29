@@ -1,10 +1,14 @@
 package com.revature.beans;
 
+//import java.util.Set;
+
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+//import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -41,6 +45,11 @@ public class User {
 	@Column(name="lastname")
 	private String lastname;
 
+//	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+//	private Set<UserComment> userComment;
+	
+	
+	
 	public User() {
 		System.out.println("[DEBUG] - User instantiated...");
 	}
@@ -102,55 +111,13 @@ public class User {
 		this.lastname = lastname;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
-		result = prime * result + user_id;
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
+//	public Set<UserComment> getUserComment() {
+//		return userComment;
+//	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (firstname == null) {
-			if (other.firstname != null)
-				return false;
-		} else if (!firstname.equals(other.firstname))
-			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
-				return false;
-		} else if (!lastname.equals(other.lastname))
-			return false;
-		if (user_id != other.user_id)
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
-	}
+//	public void setUserComment(Set<UserComment> userComment) {
+//		this.userComment = userComment;
+//	}
 
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", username=" + username + ", email=" + email + ", firstname=" + firstname
-				+ ", lastname=" + lastname + "]";
-	}
+	
 }

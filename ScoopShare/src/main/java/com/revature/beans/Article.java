@@ -1,10 +1,15 @@
 package com.revature.beans;
 
+//import java.util.ArrayList;
+//import java.util.Set;
+
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+//import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -29,6 +34,33 @@ public class Article {
 	@Column(name="url")
 	private String url;
 
+//	@ManyToMany(mappedBy="article", cascade=CascadeType.ALL)
+//	private ArrayList<UserComment> artUserComment;
+//	
+//	
+//	public ArrayList<UserComment> getArtUserComment() {
+//		return artUserComment;
+//	}
+//
+//	public void setArtUserComment(ArrayList<UserComment> artUserComment) {
+//		this.artUserComment = artUserComment;
+//	}
+//
+//	public void add(UserComment tempUserComment) {
+//		if(artUserComment == null) {
+//			artUserComment = new ArrayList<>();
+//		}
+//		
+//		// Add course to courses ArrayList
+//		artUserComment.add(tempUserComment);
+//		
+//		// Establish relationship between
+//		Set<Article> article = null;
+//		article.add(this);
+//		
+//		tempUserComment.setArticle(article);
+//	}
+	
 	public Article() {
 		System.out.println("[DEBUG] - Article instantiated...");
 	}

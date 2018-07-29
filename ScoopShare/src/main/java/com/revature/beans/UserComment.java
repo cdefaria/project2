@@ -1,77 +1,83 @@
 package com.revature.beans;
 
+//import java.util.Set;
+
+//import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+//import javax.persistence.ManyToMany;
+//import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 @Entity
+@Component
 @Table(name="USER_COMMENTS")
+//@SequenceGenerator(name="userCommentSeq", sequenceName="USER_COMMENT_SEQ", allocationSize=1)
 public class UserComment {
 
 	@Id
 	@Column(name="comment_id")
+	//@GeneratedValue(strategy=GenerationType.IDENTITY, generator="userCommentSeq")
 	private int commentId;
-	
-	@JoinColumn(name="user_id")
-	private int userId;
-	
-	@JoinColumn(name="article_id")
-	private int articleId;
-	
+
 	@Column(name="u_comment")
 	private String comments;
-	
+
+	@JoinColumn(name="user_id")
+	private int userId;
+	//	@ManyToOne(cascade = CascadeType.ALL)
+	//	@JoinColumn(name="user_id")
+	//	private User user; 
+	//	
+	@JoinColumn(name="article_id")
+	private int articleId;
+	//	@ManyToMany(mappedBy="instructor", cascade = CascadeType.ALL)
+	//	@JoinColumn(name="article_id")
+	//	private Set<Article> article;
+
+
 	public UserComment() {}
-	
-	public UserComment(int userId, int articleId, String comments) {
+	public UserComment(String comments, int userId, int articleId) {
 		super();
+		this.comments = comments;
 		this.userId = userId;
 		this.articleId = articleId;
-		this.comments = comments;
 	}
-
-	public UserComment(int commentId, int userId, int articleId, String comments) {
+	public UserComment(int commentId, String comments, int userId, int articleId) {
 		super();
 		this.commentId = commentId;
+		this.comments = comments;
 		this.userId = userId;
 		this.articleId = articleId;
-		this.comments = comments;
 	}
-
 	public int getCommentId() {
 		return commentId;
 	}
-
 	public void setCommentId(int commentId) {
 		this.commentId = commentId;
 	}
-
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-	public int getArticleId() {
-		return articleId;
-	}
-
-	public void setArticleId(int articleId) {
-		this.articleId = articleId;
-	}
-
 	public String getComments() {
 		return comments;
 	}
-
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	public int getArticleId() {
+		return articleId;
+	}
+	public void setArticleId(int articleId) {
+		this.articleId = articleId;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -82,7 +88,6 @@ public class UserComment {
 		result = prime * result + userId;
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -105,11 +110,15 @@ public class UserComment {
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString() {
-		return "UserComments [commentId=" + commentId + ", userId=" + userId + ", articleId=" + articleId
-				+ ", comments=" + comments + "]";
+		return "UserComment [commentId=" + commentId + ", comments=" + comments + ", userId=" + userId + ", articleId="
+				+ articleId + "]";
 	}
-	
+
+
+
+
+
+
 }
