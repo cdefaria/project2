@@ -31,6 +31,25 @@ public class UserRepository {
 		return s.get(User.class, id);
 	}
 	
+	@SuppressWarnings("unused")
+	public User login(String username, String password) {
+		System.out.println("[DEBUG] - In UserRepository.login()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		@SuppressWarnings("unchecked")
+		List<User> user= currentSession.createQuery("from User user Where user.username=:username AND user.password=:password")
+				.setParameter("username", username).setParameter("password", password).getResultList();
+		
+		if (user.isEmpty()) {
+			System.out.println("No user was found with those credentials so returning a null value");
+			return null;
+		} else {
+			return user.remove(0);
+		}
+		
+	}
+	
+	
 	public User addUser(User u) {
 		System.out.println("[DEBUG] - In UserRepository.getById()...");
 		Session s= sessionFactory.getCurrentSession();

@@ -47,8 +47,13 @@ public class User {
 	public User() {
 		System.out.println("[DEBUG] - User instantiated...");
 	}
-
 	
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
 	public User(String username, String email, String firstname, String lastname) {
 		super();
 		this.username = username;
@@ -106,6 +111,14 @@ public class User {
 		this.lastname = lastname;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -113,6 +126,7 @@ public class User {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + user_id;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
@@ -142,6 +156,11 @@ public class User {
 				return false;
 		} else if (!lastname.equals(other.lastname))
 			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
 		if (user_id != other.user_id)
 			return false;
 		if (username == null) {
@@ -154,7 +173,9 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [user_id=" + user_id + ", username=" + username + ", email=" + email + ", firstname=" + firstname
-				+ ", lastname=" + lastname + "]";
+		return "User [user_id=" + user_id + ", username=" + username + ", password=" + password + ", email=" + email
+				+ ", firstname=" + firstname + ", lastname=" + lastname + "]";
 	}
+
+	
 }

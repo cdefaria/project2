@@ -33,4 +33,9 @@ public class UserService {
 		System.out.println("[DEBUG] - In UserService.addUser()...");
 		return userRepo.addUser(u);
 	}
+	
+	public User login(String username, String password) {
+		System.out.println("[DEBUG] - In UserService.login()...");
+		return userRepo.login(username, password);
+	}
 }
