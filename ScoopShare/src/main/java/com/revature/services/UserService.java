@@ -33,4 +33,6 @@ public class UserService {
 		System.out.println("[DEBUG] - In UserService.addUser()...");
 		return userRepo.addUser(u);
 	}
+	
+	public user register()
 }

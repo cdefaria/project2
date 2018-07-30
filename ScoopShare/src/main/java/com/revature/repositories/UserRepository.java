@@ -32,9 +32,15 @@ public class UserRepository {
 	}
 	
 	public User addUser(User u) {
-		System.out.println("[DEBUG] - In UserRepository.getById()...");
+		System.out.println("[DEBUG] - In UserRepository.addUser()...");
 		Session s= sessionFactory.getCurrentSession();
 		s.save(u);
 		return u;
+	}
+	
+	public User register(User u) {
+		System.out.println("[DEBUG] - In UserRepository.register()...");
+		Session session = sessionFactory.getCurrentSession();
+		session.
 	}
 }
