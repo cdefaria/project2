@@ -45,10 +45,8 @@ public class UserRepository {
 			return null;
 		} else {
 			return user.remove(0);
-		}
-		
+		}	
 	}
-	
 	
 	public User addUser(User u) {
 		System.out.println("[DEBUG] - In UserRepository.getById()...");
