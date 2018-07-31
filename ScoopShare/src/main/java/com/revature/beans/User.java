@@ -7,22 +7,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Unique;
-
 
 import org.springframework.stereotype.Component;
 
 @Entity
 @Component
-@Table(name="USERS")
+@Table(name="USERS",
+	uniqueConstraints=
+		@UniqueConstraint(columnNames={"user_id","username","email"})
+)
 @SequenceGenerator(name="userSeq", sequenceName="USER_SEQ", allocationSize=1)
 public class User {	
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="userSeq")
-	private int user_id;
+	private int userId;
 	
 	@Column(name="username")
 	private String username;
@@ -31,7 +33,6 @@ public class User {
 	private String password;
 	
 	@NotNull
-	//@Unique
 	@Email
 	@Column(name="email")	
 	private String email;
@@ -62,21 +63,21 @@ public class User {
 		this.lastname = lastname;
 	}
 
-	public User(int user_id, String username, String email, String firstname, String lastname) {
+	public User(int userId, String username, String email, String firstname, String lastname) {
 		super();
-		this.user_id = user_id;
+		this.userId = userId;
 		this.username = username;
 		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 	}
 	
-	public int getUser_id() {
-		return user_id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getUsername() {
@@ -127,7 +128,7 @@ public class User {
 		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
 		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + user_id;
+		result = prime * result + userId;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -161,7 +162,7 @@ public class User {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (user_id != other.user_id)
+		if (userId != other.userId)
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -173,7 +174,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [user_id=" + user_id + ", username=" + username + ", password=" + password + ", email=" + email
+		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", firstname=" + firstname + ", lastname=" + lastname + "]";
 	}
 
