@@ -1,9 +1,11 @@
 package com.revature.beans;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,6 +24,13 @@ public class UserComment {
 	
 	@Column(name="u_comment")
 	private String comments;
+	
+	@ManyToOne(cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	public UserComment() {}
 	
