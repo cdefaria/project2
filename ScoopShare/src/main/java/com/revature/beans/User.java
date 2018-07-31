@@ -9,7 +9,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Unique;
 
 
 import org.springframework.stereotype.Component;
@@ -19,36 +18,27 @@ import org.springframework.stereotype.Component;
 @Table(name="USERS")
 @SequenceGenerator(name="userSeq", sequenceName="USER_SEQ", allocationSize=1)
 public class User {	
+	
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="userSeq")
 	private int user_id;
 	
+	@NotNull
 	@Column(name="username")
 	private String username;
-	
-	public String getPassword() {
-		return password;
-	}
 
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
+	@NotNull
 	@Column(name="password")
 	private String password;
 	
 	@NotNull
-	//@Unique
 	@Email
 	@Column(name="email")	
 	private String email;
 
-	
 	@Column(name="firstname")
 	private String firstname;
-
 	
 	@Column(name="lastname")
 	private String lastname;
@@ -56,25 +46,18 @@ public class User {
 	public User() {
 		System.out.println("[DEBUG] - User instantiated...");
 	}
-
 	
-	public User(String username, String email, String firstname, String lastname) {
-		super();
-		this.username = username;
-		this.email = email;
-		this.firstname = firstname;
-		this.lastname = lastname;
-	}
-
-	public User(int user_id, String username, String email, String firstname, String lastname) {
+	public User(int user_id, @NotNull String username, @NotNull String password, @NotNull @Email String email,
+			String firstname, String lastname) {
 		super();
 		this.user_id = user_id;
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
 	}
-	
+
 	public int getUser_id() {
 		return user_id;
 	}
@@ -115,6 +98,15 @@ public class User {
 		this.lastname = lastname;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

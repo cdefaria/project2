@@ -38,7 +38,7 @@ public class UserController {
 		User u;
 		u = userService.getById(id);
 		if(u == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 		} else {
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		}

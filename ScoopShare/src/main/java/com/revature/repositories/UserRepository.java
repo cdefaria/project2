@@ -1,6 +1,5 @@
 package com.revature.repositories;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Session;
