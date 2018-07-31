@@ -6,9 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -38,6 +42,17 @@ public class Article implements Serializable {
 	
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
+	
+	@ManyToMany(fetch=FetchType.LAZY, cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinTable(
+			name="FAVORITES",
+			joinColumns=@JoinColumn(name="article_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id")
+	)
+	private List<User> favorites;
 	
 	public Article() {
 		System.out.println("[DEBUG] - Article instantiated...");

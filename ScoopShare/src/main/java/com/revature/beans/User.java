@@ -66,8 +66,19 @@ public class User implements Serializable {
 			name="USERINTERTESTS",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="interest_id")
-			)
+	)
 	private List<Interest> interests;
+	
+	@ManyToMany(fetch=FetchType.LAZY, cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinTable(
+			name="FAVORITES",
+			joinColumns=@JoinColumn(name="user_id"),
+			inverseJoinColumns=@JoinColumn(name="article_id")
+	)
+	private List<Article> favorites;
 
 	public User() {
 		System.out.println("[DEBUG] - User instantiated...");
