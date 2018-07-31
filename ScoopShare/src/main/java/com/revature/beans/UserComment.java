@@ -1,5 +1,7 @@
 package com.revature.beans;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,42 +12,45 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="USER_COMMENTS")
-public class UserComment {
+// TODO: Add sequence
+public class UserComment implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="comment_id")
 	private int commentId;
-	
-	@JoinColumn(name="user_id")
-	private int userId;
-	
-	@JoinColumn(name="article_id")
-	private int articleId;
-	
-	@Column(name="u_comment")
-	private String comments;
-	
-	@ManyToOne(cascade= {
+
+	@ManyToOne(cascade={
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
 	@JoinColumn(name="user_id")
 	private User user;
-	
+
+	@ManyToOne(cascade={
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinColumn(name="article_id")
+	private Article article;
+
+	@Column(name="u_comment")
+	private String comments;
+
 	public UserComment() {}
-	
+
 	public UserComment(int userId, int articleId, String comments) {
 		super();
-		this.userId = userId;
-		this.articleId = articleId;
+		this.user.setUserId(userId);
+		this.article.setArticleId(articleId);
 		this.comments = comments;
 	}
 
 	public UserComment(int commentId, int userId, int articleId, String comments) {
 		super();
 		this.commentId = commentId;
-		this.userId = userId;
-		this.articleId = articleId;
+		this.user.setUserId(userId);
+		this.article.setArticleId(articleId);
 		this.comments = comments;
 	}
 
@@ -58,19 +63,19 @@ public class UserComment {
 	}
 
 	public int getUserId() {
-		return userId;
+		return user.getUserId();
 	}
 
 	public void setUserId(int userId) {
-		this.userId = userId;
+		this.user.setUserId(userId);
 	}
 
 	public int getArticleId() {
-		return articleId;
+		return article.getArticleId();
 	}
 
 	public void setArticleId(int articleId) {
-		this.articleId = articleId;
+		this.article.setArticleId(articleId);
 	}
 
 	public String getComments() {
@@ -85,10 +90,10 @@ public class UserComment {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + articleId;
+		result = prime * result + article.getArticleId();
 		result = prime * result + commentId;
 		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
-		result = prime * result + userId;
+		result = prime * result + this.user.getUserId();
 		return result;
 	}
 
@@ -101,7 +106,7 @@ public class UserComment {
 		if (getClass() != obj.getClass())
 			return false;
 		UserComment other = (UserComment) obj;
-		if (articleId != other.articleId)
+		if (article.getArticleId() != other.article.getArticleId())
 			return false;
 		if (commentId != other.commentId)
 			return false;
@@ -110,15 +115,15 @@ public class UserComment {
 				return false;
 		} else if (!comments.equals(other.comments))
 			return false;
-		if (userId != other.userId)
+		if (this.user.getUserId() != other.user.getUserId())
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "UserComments [commentId=" + commentId + ", userId=" + userId + ", articleId=" + articleId
+		return "UserComments [commentId=" + commentId + ", userId=" + user.getUserId() + ", articleId=" + article.getArticleId()
 				+ ", comments=" + comments + "]";
 	}
-	
+
 }

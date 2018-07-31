@@ -1,5 +1,6 @@
 package com.revature.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -24,7 +25,9 @@ import org.springframework.stereotype.Component;
 		@UniqueConstraint(columnNames={"user_id","username","email"})
 )
 @SequenceGenerator(name="userSeq", sequenceName="USER_SEQ", allocationSize=1)
-public class User {	
+public class User implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="user_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="userSeq")
@@ -41,18 +44,13 @@ public class User {
 	@Column(name="email")	
 	private String email;
 
-	
 	@Column(name="firstname")
 	private String firstname;
 
-	
 	@Column(name="lastname")
 	private String lastname;
 	
-	@OneToMany(mappedBy="userId", cascade={
-			CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REFRESH
-	})
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
 
 	public User() {
@@ -187,6 +185,5 @@ public class User {
 		return "User [userId=" + userId + ", username=" + username + ", password=" + password + ", email=" + email
 				+ ", firstname=" + firstname + ", lastname=" + lastname + "]";
 	}
-
 	
 }

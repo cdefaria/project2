@@ -1,5 +1,7 @@
 package com.revature.beans;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 @Table(name="INTERESTS")
 @SequenceGenerator(name="interestSeq", sequenceName="INTEREST_SEQ", allocationSize=1)
-public class Interest {
-	
+public class Interest implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "interest_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="interestSeq")
@@ -24,17 +27,12 @@ public class Interest {
 	@Column(name = "interest_name")
 	private String interestName;
 	
-	
 	public Interest() {}
-
-	
 	
 	public Interest(String interestName) {
 		super();
 		this.interestName = interestName;
 	}
-
-
 
 	public Interest(int interestId, String interestName) {
 		super();
@@ -57,11 +55,9 @@ public class Interest {
 		return interestName;
 	}
 
-
 	public void setInterestName(String interestName) {
 		this.interestName = interestName;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -71,7 +67,6 @@ public class Interest {
 		result = prime * result + ((interestName == null) ? 0 : interestName.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -92,11 +87,9 @@ public class Interest {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Interests [interestId=" + interestId + ", interestName=" + interestName + "]";
 	}
-	
 	
 }
