@@ -34,8 +34,27 @@ public class UserRepository {
 	public User addUser(User u) {
 		System.out.println("[DEBUG] - In UserRepository.addUser()...");
 		Session currentSession= sessionFactory.getCurrentSession();
-		currentSession.save(u);
-		return u;
+		
+		String username = u.getUsername();
+		String password = u.getPassword();
+		
+		List<User> user= currentSession.createQuery("from User user Where user.username=:username AND user.password=:password")
+				.setParameter("username", username).setParameter("password", password).getResultList();
+		
+		if (user.isEmpty()) {
+			System.out.println("Username is available");
+			currentSession.save(u);
+			return user.remove(0);
+		} else {
+			System.out.println("Username is NOT available");
+			u.setUser_id(-1);
+			return u;
+		}
+		
+		
+		
+		//currentSession.save(u);
+		//return u;
 	}
 	
 }
