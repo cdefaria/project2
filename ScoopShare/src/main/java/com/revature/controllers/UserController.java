@@ -47,7 +47,9 @@ public class UserController {
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> addUser(@RequestBody User u) {
 		System.out.println("[DEBUG] - In UserController.addUser()");
-		userService.addUser(u);
+		User user = userService.addUser(u);
+		
 		return new ResponseEntity<User>(HttpStatus.CREATED);
+		
 	}
 }

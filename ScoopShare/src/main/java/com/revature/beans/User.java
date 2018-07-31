@@ -27,6 +27,15 @@ public class User {
 	@Column(name="username")
 	private String username;
 	
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Column(name="password")
 	private String password;
 	

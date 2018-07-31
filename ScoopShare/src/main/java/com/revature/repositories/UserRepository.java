@@ -1,5 +1,6 @@
 package com.revature.repositories;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -33,14 +34,9 @@ public class UserRepository {
 	
 	public User addUser(User u) {
 		System.out.println("[DEBUG] - In UserRepository.addUser()...");
-		Session s= sessionFactory.getCurrentSession();
-		s.save(u);
+		Session currentSession= sessionFactory.getCurrentSession();
+		currentSession.save(u);
 		return u;
 	}
 	
-	public User register(User u) {
-		System.out.println("[DEBUG] - In UserRepository.register()...");
-		Session session = sessionFactory.getCurrentSession();
-		session.
-	}
 }

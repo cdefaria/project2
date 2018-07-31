@@ -34,5 +34,4 @@ public class UserService {
 		return userRepo.addUser(u);
 	}
 	
-	public user register()
 }
