@@ -1,12 +1,18 @@
 package com.revature.beans;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -26,6 +32,18 @@ public class Interest implements Serializable {
 	
 	@Column(name = "interest_name")
 	private String interestName;
+	
+	@ManyToMany(fetch=FetchType.LAZY, cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinTable(
+			// TODO: Rename table. look at User
+			name="USERINTERTESTS",
+			joinColumns=@JoinColumn(name="interest_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id")
+	)
+	private List<User> users;
 	
 	public Interest() {}
 	
