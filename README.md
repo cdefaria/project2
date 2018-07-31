@@ -1,26 +1,32 @@
-# project2
+# project2-backend
 
 # Branches
-master
+## master
+### Users
+#### "/users"
+##### GET
+returns a List of Users
+##### PUT
+creates a user and returns the user created
 
-login-out
+## dev
 
-register
+## login-out
 
-interests
+## register
 
-search
+## interests
 
-home
+## search
 
-favorites
+## home
 
-trending
+## favorites
 
-rate
+## trending
 
-share
+## rate
 
-comment
+## share
 
-
+## comment
