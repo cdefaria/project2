@@ -29,27 +29,27 @@ public class Article implements Serializable {
 	
 	@Column(name="title")
 	private String title;
-
+	
 	@Column(name="description")
 	private String description;
-
+	
 	@Column(name="url")
 	private String url;
-	
+		
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
 	
 	public Article() {
 		System.out.println("[DEBUG] - Article instantiated...");
 	}
-
+	
 	public Article(String title, String description, String url) {
 		super();
 		this.title = title;
 		this.description = description;
 		this.url = url;
 	}
-
+	
 	public Article(int articleId, String title, String description, String url) {
 		super();
 		this.articleId = articleId;

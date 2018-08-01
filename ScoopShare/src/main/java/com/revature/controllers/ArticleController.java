@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.beans.Article;
+import com.revature.beans.User;
 import com.revature.services.ArticleService;
 
 // don't send back vague codes such as: 200, 300, 400, and 500 if it can be avoided.
@@ -38,15 +39,34 @@ public class ArticleController {
 	}
 	
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public Article getArticleById(@PathVariable int Id) {
+	public ResponseEntity<Article> getArticleById(@PathVariable int id) {
 		System.out.println("[DEBUG] - In ArticleController.getArticleById()...");
-	    Article article = articleService.getById(Id);	
+	    Article article = articleService.getById(id);	
 	    
 	    if(article == null) {
-	    	return null;//throw error here
+	    	System.out.println("article not found");
+	    	//return null;//throw error here
+	    	return new ResponseEntity<Article> (HttpStatus.NOT_FOUND);
 	    }
 	    
-	    return article;
+	    System.out.println("article found");
+	    return new ResponseEntity<Article>(article, HttpStatus.OK);
+	    //return article;
+	}
+	
+	@PostMapping(value="/search", consumes=MediaType.TEXT_PLAIN_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Article> search(@RequestBody String findArticle) {
+		System.out.println("[DEBUG] - In ArticleController.search()...");
+		System.out.println("Trying to find: " + findArticle);
+		
+		Article article = articleService.getByTitle(findArticle);
+		
+		if (article == null) {
+			System.out.println("No article was found with the name: " + findArticle);
+			return new ResponseEntity<Article> (HttpStatus.NOT_FOUND);
+		}
+		System.out.println("Found article with the name: " + findArticle);
+		return new ResponseEntity<Article> (article, HttpStatus.OK);
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)

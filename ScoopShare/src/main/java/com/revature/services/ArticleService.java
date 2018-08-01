@@ -39,4 +39,9 @@ public class ArticleService {
 		System.out.println("[DEBUG] - In ArticleService.updatedArticle()...");
 		return articleRepo.updateArticle(updatedArticle);
 	}
+	
+	public Article getByTitle(String findArticle) {
+		System.out.println("[DEBUG] - In ArticleService.getByTitle()...");
+		return articleRepo.getByTitle(findArticle);
+	}
 }
