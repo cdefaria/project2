@@ -54,19 +54,20 @@ public class ArticleController {
 	    //return article;
 	}
 	
-	@PostMapping(value="/search", consumes=MediaType.TEXT_PLAIN_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Article> search(@RequestBody String findArticle) {
+	@PostMapping(value="/search", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Article> search(@RequestBody String[] findArticle) {
 		System.out.println("[DEBUG] - In ArticleController.search()...");
-		System.out.println("Trying to find: " + findArticle);
+		System.out.println("Trying to find: " + findArticle[0]);
 		
-		Article article = articleService.getByTitle(findArticle);
-		
+		Article article = articleService.getByTitle(findArticle[0]); 
 		if (article == null) {
-			System.out.println("No article was found with the name: " + findArticle);
+			System.out.println("No article was found with the name: " + findArticle[0]);
 			return new ResponseEntity<Article> (HttpStatus.NOT_FOUND);
 		}
-		System.out.println("Found article with the name: " + findArticle);
+		
+		System.out.println("Found article with the name: " + findArticle[0]);
 		return new ResponseEntity<Article> (article, HttpStatus.OK);
+		
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
