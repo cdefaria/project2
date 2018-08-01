@@ -30,7 +30,7 @@ public class Interest implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="interestSeq")
 	private int interestId;
 	
-	@Column(name = "interest_name")
+	@Column(name = "interest_name",unique=true)
 	private String interestName;
 	
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
@@ -38,8 +38,7 @@ public class Interest implements Serializable {
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
 	@JoinTable(
-			// TODO: Rename table. look at User
-			name="USERINTERTESTS",
+			name="USER_INTERESTS",
 			joinColumns=@JoinColumn(name="interest_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id")
 	)

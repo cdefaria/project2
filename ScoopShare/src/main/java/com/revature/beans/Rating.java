@@ -2,10 +2,15 @@ package com.revature.beans;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
@@ -15,16 +20,29 @@ import org.springframework.stereotype.Component;
 public class Rating implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name="user_id")
-	private int userId;
-	
-	@Id
-	@Column(name="article_id")
-	private int articleId;
+	@EmbeddedId
+	UserArticles id;
 	
 	@Column(name="rating")
 	private int rating;
+	
+	@MapsId("userId")
+	@NotNull
+	@ManyToOne(cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinColumn(name="user_id")
+	User user;
+	
+	@MapsId("articleId")
+	@NotNull
+	@ManyToOne(cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinColumn(name="article_id")
+	Article article;
 	
 	public Rating() {
 		
@@ -32,25 +50,25 @@ public class Rating implements Serializable {
 
 	public Rating(int userId, int articleId, int rating) {
 		super();
-		this.userId = userId;
-		this.articleId = articleId;
+		this.id.setUserId(userId);
+		this.id.setArticleId(articleId);
 		this.rating = rating;
 	}
 
 	public int getUserId() {
-		return userId;
+		return id.getUserId();
 	}
 
 	public void setUserId(int userId) {
-		this.userId = userId;
+		this.id.setUserId(userId);
 	}
 
 	public int getArticleId() {
-		return articleId;
+		return id.getArticleId();
 	}
 
 	public void setArticleId(int articleId) {
-		this.articleId = articleId;
+		this.id.setArticleId(articleId);
 	}
 
 	public int getRating() {
@@ -65,9 +83,7 @@ public class Rating implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + articleId;
 		result = prime * result + rating;
-		result = prime * result + userId;
 		return result;
 	}
 
@@ -80,18 +96,18 @@ public class Rating implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Rating other = (Rating) obj;
-		if (articleId != other.articleId)
+		if (id.getArticleId() != other.id.getArticleId())
 			return false;
 		if (rating != other.rating)
 			return false;
-		if (userId != other.userId)
+		if (id.getUserId() != other.id.getUserId())
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Ratings [userId=" + userId + ", articleId=" + articleId + ", rating=" + rating + "]";
+		return "Ratings [userId=" + id.getUserId() + ", articleId=" + id.getArticleId() + ", rating=" + rating + "]";
 	}
 	
 }

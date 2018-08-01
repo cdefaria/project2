@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Table(name="USERS",
 uniqueConstraints=
-@UniqueConstraint(columnNames={"user_id","username","email"})
+@UniqueConstraint(columnNames={"username","email"})
 		)
 @SequenceGenerator(name="userSeq", sequenceName="USER_SEQ", allocationSize=1)
 public class User implements Serializable {
@@ -37,9 +37,11 @@ public class User implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="userSeq")
 	private int userId;
 
+	@NotNull
 	@Column(name="username")
 	private String username;
 
+	@NotNull
 	@Column(name="password")
 	private String password;
 
@@ -48,22 +50,26 @@ public class User implements Serializable {
 	@Column(name="email")	
 	private String email;
 
+	@NotNull
 	@Column(name="firstname")
 	private String firstname;
 
+	@NotNull
 	@Column(name="lastname")
 	private String lastname;
 
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
-
+	
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	private List<Rating> ratings;
+	
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
 	@JoinTable(
-			// TODO: Rename table to USER_INTERESTS
-			name="USERINTERTESTS",
+			name="USER_INTERESTS",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="interest_id")
 	)

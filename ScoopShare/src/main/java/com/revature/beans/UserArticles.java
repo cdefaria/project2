@@ -2,28 +2,14 @@ package com.revature.beans;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Embeddable
 public class UserArticles implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(cascade={
-			CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REFRESH
-	})
-	@JoinColumn(name="user_id")
 	private int userId;
 	
-	@ManyToOne(cascade={
-			CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.DETACH, CascadeType.REFRESH
-	})
-	@JoinColumn(name="article_id")
 	private int articleId;
 	
 	UserArticles() { }

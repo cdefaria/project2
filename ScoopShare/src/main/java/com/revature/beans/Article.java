@@ -16,13 +16,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
 @Entity
 @Component
 @Table(name="ARTICLES")
-@SequenceGenerator(name="articleSeq", sequenceName="Article_SEQ", allocationSize=1)
+@SequenceGenerator(name="articleSeq", sequenceName="ARTICLE_SEQ", allocationSize=1)
 public class Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +38,15 @@ public class Article implements Serializable {
 	@Column(name="description")
 	private String description;
 
-	@Column(name="url")
+	@NotNull
+	@Column(name="url",unique=true)
 	private String url;
 	
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
+	
+	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
+	private List<Rating> ratings;
 	
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
