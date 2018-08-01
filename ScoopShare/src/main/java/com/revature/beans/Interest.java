@@ -38,7 +38,7 @@ public class Interest implements Serializable {
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
 	@JoinTable(
-			name="USER_INTERESTS",
+			name="USERINTERTESTS",
 			joinColumns=@JoinColumn(name="interest_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id")
 	)

@@ -16,14 +16,14 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="USER_COMMENTS")
-@SequenceGenerator(name="commentSeq", sequenceName="COMMENT_SEQ", allocationSize=1)
+//@SequenceGenerator(name="commentSeq", sequenceName="COMMENT_SEQ", allocationSize=1)
 public class UserComment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@NotNull
 	@Column(name="comment_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="commentSeq")
+	//@GeneratedValue(strategy=GenerationType.IDENTITY, generator="commentSeq")
 	private int commentId;
 
 	@NotNull

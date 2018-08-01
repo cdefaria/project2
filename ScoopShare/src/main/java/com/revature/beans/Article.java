@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Component
 @Table(name="ARTICLES")
-@SequenceGenerator(name="articleSeq", sequenceName="ARTICLE_SEQ", allocationSize=1)
+@SequenceGenerator(name="articleSeq", sequenceName="Article_SEQ", allocationSize=1)
 public class Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 

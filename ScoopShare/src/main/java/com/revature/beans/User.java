@@ -69,7 +69,7 @@ public class User implements Serializable {
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
 	@JoinTable(
-			name="USER_INTERESTS",
+			name="USERINTERTESTS",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="interest_id")
 	)
