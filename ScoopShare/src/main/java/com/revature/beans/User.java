@@ -1,6 +1,7 @@
 package com.revature.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -79,6 +80,7 @@ public class User implements Serializable {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
+	
 	@JoinTable(
 			name="FAVORITES",
 			joinColumns=@JoinColumn(name="user_id"),
@@ -160,7 +162,49 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public List<UserComment> getUserComments() {
+		return userComments;
+	}
 
+	public void setUserComments(List<UserComment> userComments) {
+		this.userComments = userComments;
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+
+	public List<Article> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(List<Article> favorites) {
+		this.favorites = favorites;
+	}
+	
+//	public List<Interest> getInterests() {
+//		return interests;
+//	}
+//
+//	public void setInterests(List<Interest> interests) {
+//		this.interests = interests;
+//	}
+
+	// add interest to user
+//	public void addInterest(Interest interest) {
+//		if (interest == null) {
+//			interests =new ArrayList<>();
+//		}
+//		  
+//		interests.add(interest);
+//	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
