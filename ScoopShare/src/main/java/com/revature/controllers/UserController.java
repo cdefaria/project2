@@ -49,7 +49,11 @@ public class UserController {
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> addUser(@RequestBody User u) {
 		System.out.println("[DEBUG] - In UserController.addUser()");
-		userService.addUser(u);
+		
+		
+		if (userService.addUser(u) == null) {
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+		}
 		return new ResponseEntity<User>(HttpStatus.CREATED);
 	}
 }

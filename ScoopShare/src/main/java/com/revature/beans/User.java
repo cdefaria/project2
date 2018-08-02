@@ -236,6 +236,16 @@ public class User implements Serializable {
 		  
 		interests.add(interest);
 	}
+
+	public boolean checkNull() {
+		if (this.email==null || this.firstname==null || this.lastname==null || this.password==null || this.username==null) {
+			System.out.println("something was null user = " + this);
+			return true;
+		}
+		
+		System.out.println("NOTHING was null user = " + this);
+		return false;
+	}
 	
 	@Override
 	public int hashCode() {

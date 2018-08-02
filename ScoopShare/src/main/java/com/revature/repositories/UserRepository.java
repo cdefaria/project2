@@ -51,6 +51,13 @@ public class UserRepository {
 	public User addUser(User u) {
 		System.out.println("[DEBUG] - In UserRepository.getById()...");
 		Session s= sessionFactory.getCurrentSession();
+		
+		if (u.checkNull()) {
+			System.out.println("userRepo Something was null!");
+			return null;
+		}
+		
+		System.out.println("userRepo nothing was null");
 		s.save(u);
 		return u;
 	}
