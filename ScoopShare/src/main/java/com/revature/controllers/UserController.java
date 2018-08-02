@@ -40,7 +40,7 @@ public class UserController {
 		User u;
 		u = userService.getById(id);
 		if(u == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 		} else {
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		}
@@ -49,11 +49,15 @@ public class UserController {
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> addUser(@RequestBody User u) {
 		System.out.println("[DEBUG] - In UserController.addUser()");
+		User user = userService.addUser(u);
 		
-		
-		if (userService.addUser(u) == null) {
-			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+		System.out.println("user Id = " + user.getUser_id());
+		if (user.getUser_id() == -1 || user.getUser_id() == -2) {
+			System.out.println("working properly");
+			return new ResponseEntity<User>(HttpStatus.CONFLICT);
 		}
+		
 		return new ResponseEntity<User>(HttpStatus.CREATED);
+		
 	}
 }

@@ -116,6 +116,7 @@ public class User implements Serializable {
 		super();
 		this.userId = userId;
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.firstname = firstname;
 		this.lastname = lastname;
