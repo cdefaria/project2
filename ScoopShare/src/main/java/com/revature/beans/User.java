@@ -23,6 +23,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 @Table(name="USERS",
@@ -59,12 +61,15 @@ public class User implements Serializable {
 	@Column(name="lastname")
 	private String lastname;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<Rating> ratings;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
@@ -76,6 +81,7 @@ public class User implements Serializable {
 	)
 	private List<Interest> interests;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
@@ -187,23 +193,32 @@ public class User implements Serializable {
 		this.favorites = favorites;
 	}
 	
-//	public List<Interest> getInterests() {
-//		return interests;
-//	}
-//
-//	public void setInterests(List<Interest> interests) {
-//		this.interests = interests;
-//	}
+	public List<Interest> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<Interest> interests) {
+		this.interests = interests;
+	}
 
 	// add interest to user
-//	public void addInterest(Interest interest) {
-//		if (interest == null) {
-//			interests =new ArrayList<>();
-//		}
-//		  
-//		interests.add(interest);
-//	}
+	public void addInterest(Interest interest) {
+		if (interest == null) {
+			interests =new ArrayList<>();
+		}
+		  
+		interests.add(interest);
+	}
 	
+	public boolean checkNull() {
+		if (this.email==null || this.firstname==null || this.lastname==null || this.password==null || this.username==null) {
+			System.out.println("something was null user = " + this);
+			return true;
+		}
+		
+		System.out.println("NOTHING was null user = " + this);
+		return false;
+	}
 	
 	@Override
 	public int hashCode() {

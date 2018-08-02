@@ -19,6 +19,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 @Table(name="INTERESTS")
@@ -34,6 +36,7 @@ public class Interest implements Serializable {
 	@Column(name = "interest_name",unique=true)
 	private String interestName;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
@@ -105,21 +108,21 @@ public class Interest implements Serializable {
 		return true;
 	}
 
-//	public List<User> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(List<User> users) {
-//		this.users = users;
-//	}
-//	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
 	// add user to interest
-//	public void addUser(User user) {
-//		if (user == null) {
-//			users = new ArrayList<>();
-//		}
-//		users.add(user);
-//	}
+	public void addUser(User user) {
+		if (user == null) {
+			users = new ArrayList<>();
+		}
+		users.add(user);
+	}
 	
 	@Override
 	public String toString() {
