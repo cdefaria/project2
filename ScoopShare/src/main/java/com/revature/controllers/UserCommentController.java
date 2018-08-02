@@ -21,7 +21,7 @@ import com.revature.services.UserCommentService;
 // user plural when giving value to RequestMapping
 // 201- created
 @RestController
-@RequestMapping(value="/user-comments")
+@RequestMapping(value="/comments")
 public class UserCommentController {
 	
 	static {
