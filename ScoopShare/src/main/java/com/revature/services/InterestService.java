@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 //import com.revature.beans.Article;
 import com.revature.beans.Interest;
+import com.revature.beans.User;
 import com.revature.repositories.InterestRepository;
 
 @Service
@@ -41,4 +42,8 @@ public class InterestService {
 		return interestRepo.updateInterest(updatedInterest);
 	}
 	
+	public List<Interest> getAllInterest(int id) {
+		System.out.println("[DEBUG] - In InterestService()...");
+		return interestRepo.getAllInterest(id);
+	}
 }

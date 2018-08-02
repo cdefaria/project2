@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.revature.beans.Interest;
 import com.revature.beans.User;
 
 @Repository
@@ -44,7 +45,8 @@ public class UserRepository {
 			System.out.println("No user was found with those credentials so returning a null value");
 			return null;
 		} else {
-			return user.remove(0);
+	       //currentSession.			
+	       return user.remove(0);
 		}	
 	}
 	
@@ -80,6 +82,27 @@ public class UserRepository {
 			return u;
 		}
 			
+	}
+	
+	public List<Interest> addInterest (Interest interest, User user) {
+		System.out.println("[DEBUG] - In UserRepository.addInterest...");
+		Session currentSession= sessionFactory.getCurrentSession();
+		int userId = user.getUserId();
+		String interestName = interest.getInterestName();
+		
+		User u = currentSession.get(User.class, userId);
+		
+		List<Interest> i = currentSession.createQuery("from Interest interest Where interest.interestName=:interestName")
+				.setParameter("interestName", interestName).getResultList();
+		
+		if (i.isEmpty()) {
+			System.out.println("Interest was not added properly");
+			return null;
+		}
+		
+		u.addInterest(i.remove(0));
+		
+		return u.getInterests();
 	}
 	
 }
