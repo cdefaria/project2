@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 @Table(name="RATINGS")
@@ -26,22 +28,24 @@ public class Rating implements Serializable {
 	@Column(name="rating")
 	private int rating;
 	
+	@JsonIgnore
 	@MapsId("userId")
 	@NotNull
 	@ManyToOne(cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id",nullable=false)
 	User user;
 	
+	@JsonIgnore
 	@MapsId("articleId")
 	@NotNull
 	@ManyToOne(cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
-	@JoinColumn(name="article_id")
+	@JoinColumn(name="article_id",nullable=false)
 	Article article;
 	
 	public Rating() {
