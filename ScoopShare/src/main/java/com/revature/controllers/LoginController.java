@@ -30,6 +30,7 @@ public class LoginController {
 		System.out.println("[DEBUG] - In LoginController.login()");
 		User found = userService.login(u.getUsername(), u.getPassword());
 		
+		
 		if (found == null) {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} else {
