@@ -1,29 +1,39 @@
 package com.revature.beans;
 
-//import java.util.ArrayList;
-//import java.util.Set;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-//import javax.persistence.CascadeType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-//import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Component
 @Table(name="ARTICLES")
-@SequenceGenerator(name="ArticleSeq", sequenceName="Article_SEQ", allocationSize=1)
-public class Article {
+@SequenceGenerator(name="articleSeq", sequenceName="ARTICLE_SEQ", allocationSize=1)
+public class Article implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name="article_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="ArticleSeq")
-	private int article_id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="articleSeq")
+	private int articleId;
 	
 	@Column(name="title")
 	private String title;
@@ -31,35 +41,28 @@ public class Article {
 	@Column(name="description")
 	private String description;
 
-	@Column(name="url")
+	@NotNull
+	@Column(name="url",unique=true,nullable=false)
 	private String url;
-
-//	@ManyToMany(mappedBy="article", cascade=CascadeType.ALL)
-//	private ArrayList<UserComment> artUserComment;
-//	
-//	
-//	public ArrayList<UserComment> getArtUserComment() {
-//		return artUserComment;
-//	}
-//
-//	public void setArtUserComment(ArrayList<UserComment> artUserComment) {
-//		this.artUserComment = artUserComment;
-//	}
-//
-//	public void add(UserComment tempUserComment) {
-//		if(artUserComment == null) {
-//			artUserComment = new ArrayList<>();
-//		}
-//		
-//		// Add course to courses ArrayList
-//		artUserComment.add(tempUserComment);
-//		
-//		// Establish relationship between
-//		Set<Article> article = null;
-//		article.add(this);
-//		
-//		tempUserComment.setArticle(article);
-//	}
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
+	private List<UserComment> userComments;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
+	private List<Rating> ratings;
+	
+	@ManyToMany(fetch=FetchType.LAZY, cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinTable(
+			name="FAVORITES",
+			joinColumns=@JoinColumn(name="article_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id")
+	)
+	private List<User> favorites;
 	
 	public Article() {
 		System.out.println("[DEBUG] - Article instantiated...");
@@ -72,20 +75,20 @@ public class Article {
 		this.url = url;
 	}
 
-	public Article(int article_id, String title, String description, String url) {
+	public Article(int articleId, String title, String description, String url) {
 		super();
-		this.article_id = article_id;
+		this.articleId = articleId;
 		this.title = title;
 		this.description = description;
 		this.url = url;
 	}
 
-	public int getArticle_id() {
-		return article_id;
+	public int getArticleId() {
+		return articleId;
 	}
 
-	public void setArticle_id(int article_id) {
-		this.article_id = article_id;
+	public void setArticleId(int articleId) {
+		this.articleId = articleId;
 	}
 
 	public String getTitle() {
@@ -112,11 +115,63 @@ public class Article {
 		this.url = url;
 	}
 
+	public List<UserComment> getUserComments() {
+		return userComments;
+	}
+
+	public void setUserComments(List<UserComment> userComments) {
+		this.userComments = userComments;
+	}
+	
+	// Add user comments
+	public void addUserComments(UserComment userComment) {
+		if(this.userComments == null) {
+			userComments = new ArrayList<>();
+		}
+		
+		userComments.add(userComment);
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+	
+	// Add ratings
+	public void addRatings(Rating rating) {
+		if(this.ratings == null) {
+			ratings = new ArrayList<>();
+		}
+		
+		ratings.add(rating);
+	}
+
+	public List<User> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(List<User> favorites) {
+		this.favorites = favorites;
+	}
+	
+	
+	// Add favorites
+	public void addFavorites(User favorite) {
+		if(this.favorites == null) {
+			favorites = new ArrayList<>();
+		}
+		
+		favorites.add(favorite);
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + article_id;
+		result = prime * result + articleId;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		result = prime * result + ((url == null) ? 0 : url.hashCode());
@@ -132,7 +187,7 @@ public class Article {
 		if (getClass() != obj.getClass())
 			return false;
 		Article other = (Article) obj;
-		if (article_id != other.article_id)
+		if (articleId != other.articleId)
 			return false;
 		if (description == null) {
 			if (other.description != null)
@@ -154,7 +209,7 @@ public class Article {
 
 	@Override
 	public String toString() {
-		return "Article [article_id=" + article_id + ", title=" + title + ", description=" + description + ", url="
+		return "Article [articleId=" + articleId + ", title=" + title + ", description=" + description + ", url="
 				+ url + "]";
 	}
 }

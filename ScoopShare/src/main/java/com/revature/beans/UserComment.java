@@ -1,58 +1,72 @@
 package com.revature.beans;
 
-//import java.util.Set;
+import java.io.Serializable;
 
-//import javax.persistence.CascadeType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-//import javax.persistence.ManyToMany;
-//import javax.persistence.ManyToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.stereotype.Component;
 
 @Entity
 @Component
 @Table(name="USER_COMMENTS")
-//@SequenceGenerator(name="userCommentSeq", sequenceName="USER_COMMENT_SEQ", allocationSize=1)
-public class UserComment {
+@SequenceGenerator(name="commentSeq", sequenceName="COMMENT_SEQ", allocationSize=1)
+public class UserComment implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="comment_id")
-	//@GeneratedValue(strategy=GenerationType.IDENTITY, generator="userCommentSeq")
+	@NotNull
+	@Column(name="comment_id",nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="commentSeq")
 	private int commentId;
 
-	@Column(name="u_comment")
+	@JsonIgnore
+	@NotNull
+	@ManyToOne(cascade={
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinColumn(name="user_id",nullable=false)
+	private User user;
+
+	@JsonIgnore
+	@NotNull
+	@ManyToOne(cascade={
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinColumn(name="article_id",nullable=false)
+	private Article article;
+
+	@NotNull
+	@Column(name="u_comment",nullable=false)
 	private String comments;
 
-	@JoinColumn(name="user_id")
-	private int userId;
-	//	@ManyToOne(cascade = CascadeType.ALL)
-	//	@JoinColumn(name="user_id")
-	//	private User user; 
-	//	
-	@JoinColumn(name="article_id")
-	private int articleId;
-	//	@ManyToMany(mappedBy="instructor", cascade = CascadeType.ALL)
-	//	@JoinColumn(name="article_id")
-	//	private Set<Article> article;
-
-
 	public UserComment() {}
-	public UserComment(String comments, int userId, int articleId) {
+
+	public UserComment(int userId, int articleId, String comments) {
 		super();
+		this.user.setUserId(userId);
+		this.article.setArticleId(articleId);
 		this.comments = comments;
-		this.userId = userId;
-		this.articleId = articleId;
 	}
 	public UserComment(int commentId, String comments, int userId, int articleId) {
 		super();
 		this.commentId = commentId;
+		this.user.setUserId(userId);
+		this.article.setArticleId(articleId);
 		this.comments = comments;
-		this.userId = userId;
-		this.articleId = articleId;
 	}
 	public int getCommentId() {
 		return commentId;
@@ -67,25 +81,25 @@ public class UserComment {
 		this.comments = comments;
 	}
 	public int getUserId() {
-		return userId;
+		return user.getUserId();
 	}
 	public void setUserId(int userId) {
-		this.userId = userId;
+		this.user.setUserId(userId);
 	}
 	public int getArticleId() {
-		return articleId;
+		return article.getArticleId();
 	}
 	public void setArticleId(int articleId) {
-		this.articleId = articleId;
+		this.article.setArticleId(articleId);
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + articleId;
+		result = prime * result + article.getArticleId();
 		result = prime * result + commentId;
 		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
-		result = prime * result + userId;
+		result = prime * result + this.user.getUserId();
 		return result;
 	}
 	@Override
@@ -97,7 +111,7 @@ public class UserComment {
 		if (getClass() != obj.getClass())
 			return false;
 		UserComment other = (UserComment) obj;
-		if (articleId != other.articleId)
+		if (article.getArticleId() != other.article.getArticleId())
 			return false;
 		if (commentId != other.commentId)
 			return false;
@@ -106,19 +120,14 @@ public class UserComment {
 				return false;
 		} else if (!comments.equals(other.comments))
 			return false;
-		if (userId != other.userId)
+		if (this.user.getUserId() != other.user.getUserId())
 			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "UserComment [commentId=" + commentId + ", comments=" + comments + ", userId=" + userId + ", articleId="
-				+ articleId + "]";
+		return "UserComments [commentId=" + commentId + ", userId=" + user.getUserId() + ", articleId=" + article.getArticleId()
+				+ ", comments=" + comments + "]";
 	}
-
-
-
-
-
 
 }

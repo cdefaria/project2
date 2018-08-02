@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,7 @@ import com.revature.services.ArticleService;
 // don't send back vague codes such as: 200, 300, 400, and 500 if it can be avoided.
 // user plural when giving value to RequestMapping
 // 201- created
+@CrossOrigin
 @RestController
 @RequestMapping(value="/articles")
 public class ArticleController {

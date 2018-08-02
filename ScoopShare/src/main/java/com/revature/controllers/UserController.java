@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.beans.User;
 import com.revature.services.UserService;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value="/users")
 public class UserController {
@@ -38,7 +40,7 @@ public class UserController {
 		User u;
 		u = userService.getById(id);
 		if(u == null) {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<User>(HttpStatus.UNAUTHORIZED);
 		} else {
 			return new ResponseEntity<User>(u, HttpStatus.OK);
 		}
@@ -47,7 +49,21 @@ public class UserController {
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> addUser(@RequestBody User u) {
 		System.out.println("[DEBUG] - In UserController.addUser()");
-		userService.addUser(u);
+		
+		if (u.checkNull()) {
+			System.out.println("Controller something was null");
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+		}
+		
+		User user = userService.addUser(u);
+		
+		System.out.println("user Id = " + user.getUserId());
+		if (user.getUserId() == -1 || user.getUserId() == -2) {
+			System.out.println("Conflict with username or password");
+			return new ResponseEntity<User>(HttpStatus.CONFLICT);
+		}
+		
 		return new ResponseEntity<User>(HttpStatus.CREATED);
+		
 	}
 }
