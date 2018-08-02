@@ -1,40 +1,61 @@
 package com.revature.beans;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Component
 @Table(name="INTERESTS")
 @SequenceGenerator(name="interestSeq", sequenceName="INTEREST_SEQ", allocationSize=1)
-public class Interest {
-	
+public class Interest implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "interest_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="interestSeq")
 	private int interestId;
 	
-	@Column(name = "interest_name")
+	@NotNull
+	@Column(name = "interest_name",unique=true,nullable=false)
 	private String interestName;
 	
-	
-	public Interest() {}
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY, cascade= {
+			CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.DETACH, CascadeType.REFRESH
+	})
+	@JoinTable(
+			name="USER_INTERESTS",
+			joinColumns=@JoinColumn(name="interest_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id")
+	)
+	private List<User> users;
 
-	
+	public Interest() {}
 	
 	public Interest(String interestName) {
 		super();
 		this.interestName = interestName;
 	}
-
-
 
 	public Interest(int interestId, String interestName) {
 		super();
@@ -57,11 +78,26 @@ public class Interest {
 		return interestName;
 	}
 
-
 	public void setInterestName(String interestName) {
 		this.interestName = interestName;
 	}
+	
+	public List<User> getUsers() {
+		return users;
+	}
 
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
+	// Add user
+	public void addUser(User user) {
+		if(users == null) {
+			users = new ArrayList<>();
+		}
+		
+		users.add(user);
+	}
 
 	@Override
 	public int hashCode() {
@@ -71,7 +107,6 @@ public class Interest {
 		result = prime * result + ((interestName == null) ? 0 : interestName.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -92,11 +127,9 @@ public class Interest {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Interests [interestId=" + interestId + ", interestName=" + interestName + "]";
 	}
-	
 	
 }

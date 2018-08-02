@@ -49,9 +49,37 @@ public class UserRepository {
 	}
 	
 	public User addUser(User u) {
-		System.out.println("[DEBUG] - In UserRepository.getById()...");
-		Session s= sessionFactory.getCurrentSession();
-		s.save(u);
-		return u;
+		System.out.println("[DEBUG] - In UserRepository.addUser()...");
+		Session currentSession= sessionFactory.getCurrentSession();
+		
+		String username = u.getUsername();
+		String email = u.getEmail();
+		
+		List<User> user= currentSession.createQuery("from User user Where user.username=:username")
+				.setParameter("username", username).getResultList();
+		
+		List<User> user2= currentSession.createQuery("from User user Where user.email=:email")
+				.setParameter("email", email).getResultList();
+		
+		if (user.isEmpty()) {
+			System.out.println("Username is available");
+			
+			if(user2.isEmpty()) {
+				System.out.println("Email is available");
+				currentSession.save(u);
+				return u;
+			} else {
+				System.out.println("Email is NOT available");
+				u.setUserId(-2);
+				return u;
+			}
+			
+		} else {
+			System.out.println("Username is NOT available");
+			u.setUserId(-1);
+			return u;
+		}
+			
 	}
+	
 }
