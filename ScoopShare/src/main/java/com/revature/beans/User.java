@@ -23,6 +23,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 @Table(name="USERS",
@@ -39,43 +41,47 @@ public class User implements Serializable {
 	private int userId;
 
 	@NotNull
-	@Column(name="username")
+	@Column(name="username",nullable=false)
 	private String username;
 
 	@NotNull
-	@Column(name="password")
+	@Column(name="password",nullable=false)
 	private String password;
 
 	@NotNull
 	@Email
-	@Column(name="email")	
+	@Column(name="email",nullable=false)	
 	private String email;
 
 	@NotNull
-	@Column(name="firstname")
+	@Column(name="firstname",nullable=false)
 	private String firstname;
 
 	@NotNull
-	@Column(name="lastname")
+	@Column(name="lastname",nullable=false)
 	private String lastname;
 
+	@JsonIgnore
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<Rating> ratings;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
 	@JoinTable(
-			name="USERINTERTESTS",
+			name="USER_INTERESTS",
 			joinColumns=@JoinColumn(name="user_id"),
 			inverseJoinColumns=@JoinColumn(name="interest_id")
 	)
 	private List<Interest> interests;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
@@ -170,6 +176,15 @@ public class User implements Serializable {
 	public void setUserComments(List<UserComment> userComments) {
 		this.userComments = userComments;
 	}
+	
+	// add comment to user
+	public void addUserComments(UserComment userComment) {
+		if (userComments == null) {
+			userComments = new ArrayList<>();
+		}
+		  
+		userComments.add(userComment);
+	}
 
 	public List<Rating> getRatings() {
 		return ratings;
@@ -177,6 +192,15 @@ public class User implements Serializable {
 
 	public void setRatings(List<Rating> ratings) {
 		this.ratings = ratings;
+	}
+	
+	// add rating to user
+	public void addRating(Rating rating) {
+		if (ratings == null) {
+			ratings = new ArrayList<>();
+		}
+		  
+		ratings.add(rating);
 	}
 
 	public List<Article> getFavorites() {
@@ -187,23 +211,31 @@ public class User implements Serializable {
 		this.favorites = favorites;
 	}
 	
-//	public List<Interest> getInterests() {
-//		return interests;
-//	}
-//
-//	public void setInterests(List<Interest> interests) {
-//		this.interests = interests;
-//	}
+	// add interest to user
+	public void addFavorites(Article favorite) {
+		if (favorites == null) {
+			favorites = new ArrayList<>();
+		}
+		  
+		favorites.add(favorite);
+	}
+	
+	public List<Interest> getInterests() {
+		return interests;
+	}
+
+	public void setInterests(List<Interest> interests) {
+		this.interests = interests;
+	}
 
 	// add interest to user
-//	public void addInterest(Interest interest) {
-//		if (interest == null) {
-//			interests =new ArrayList<>();
-//		}
-//		  
-//		interests.add(interest);
-//	}
-	
+	public void addInterest(Interest interest) {
+		if (interests == null) {
+			interests = new ArrayList<>();
+		}
+		  
+		interests.add(interest);
+	}
 	
 	@Override
 	public int hashCode() {

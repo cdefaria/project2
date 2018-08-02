@@ -14,36 +14,40 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="USER_COMMENTS")
-//@SequenceGenerator(name="commentSeq", sequenceName="COMMENT_SEQ", allocationSize=1)
+@SequenceGenerator(name="commentSeq", sequenceName="COMMENT_SEQ", allocationSize=1)
 public class UserComment implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@NotNull
-	@Column(name="comment_id")
-	//@GeneratedValue(strategy=GenerationType.IDENTITY, generator="commentSeq")
+	@Column(name="comment_id",nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="commentSeq")
 	private int commentId;
 
+	@JsonIgnore
 	@NotNull
 	@ManyToOne(cascade={
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user_id",nullable=false)
 	private User user;
 
+	@JsonIgnore
 	@NotNull
 	@ManyToOne(cascade={
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
-	@JoinColumn(name="article_id")
+	@JoinColumn(name="article_id",nullable=false)
 	private Article article;
 
 	@NotNull
-	@Column(name="u_comment")
+	@Column(name="u_comment",nullable=false)
 	private String comments;
 
 	public UserComment() {}

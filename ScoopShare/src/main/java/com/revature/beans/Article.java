@@ -1,6 +1,7 @@
 package com.revature.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,10 +21,12 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Component
 @Table(name="ARTICLES")
-@SequenceGenerator(name="articleSeq", sequenceName="Article_SEQ", allocationSize=1)
+@SequenceGenerator(name="articleSeq", sequenceName="ARTICLE_SEQ", allocationSize=1)
 public class Article implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -39,12 +42,14 @@ public class Article implements Serializable {
 	private String description;
 
 	@NotNull
-	@Column(name="url",unique=true)
+	@Column(name="url",unique=true,nullable=false)
 	private String url;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<UserComment> userComments;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<Rating> ratings;
 	
@@ -108,6 +113,58 @@ public class Article implements Serializable {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public List<UserComment> getUserComments() {
+		return userComments;
+	}
+
+	public void setUserComments(List<UserComment> userComments) {
+		this.userComments = userComments;
+	}
+	
+	// Add user comments
+	public void addUserComments(UserComment userComment) {
+		if(this.userComments == null) {
+			userComments = new ArrayList<>();
+		}
+		
+		userComments.add(userComment);
+	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
+	
+	// Add ratings
+	public void addRatings(Rating rating) {
+		if(this.ratings == null) {
+			ratings = new ArrayList<>();
+		}
+		
+		ratings.add(rating);
+	}
+
+	public List<User> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(List<User> favorites) {
+		this.favorites = favorites;
+	}
+	
+	
+	// Add favorites
+	public void addFavorites(User favorite) {
+		if(this.favorites == null) {
+			favorites = new ArrayList<>();
+		}
+		
+		favorites.add(favorite);
 	}
 
 	@Override

@@ -16,8 +16,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Component
@@ -31,20 +34,22 @@ public class Interest implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="interestSeq")
 	private int interestId;
 	
-	@Column(name = "interest_name",unique=true)
+	@NotNull
+	@Column(name = "interest_name",unique=true,nullable=false)
 	private String interestName;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
 	})
 	@JoinTable(
-			name="USERINTERTESTS",
+			name="USER_INTERESTS",
 			joinColumns=@JoinColumn(name="interest_id"),
 			inverseJoinColumns=@JoinColumn(name="user_id")
 	)
 	private List<User> users;
-	
+
 	public Interest() {}
 	
 	public Interest(String interestName) {
@@ -76,6 +81,23 @@ public class Interest implements Serializable {
 	public void setInterestName(String interestName) {
 		this.interestName = interestName;
 	}
+	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+	
+	// Add user
+	public void addUser(User user) {
+		if(users == null) {
+			users = new ArrayList<>();
+		}
+		
+		users.add(user);
+	}
 
 	@Override
 	public int hashCode() {
@@ -105,22 +127,6 @@ public class Interest implements Serializable {
 		return true;
 	}
 
-//	public List<User> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(List<User> users) {
-//		this.users = users;
-//	}
-//	
-	// add user to interest
-//	public void addUser(User user) {
-//		if (user == null) {
-//			users = new ArrayList<>();
-//		}
-//		users.add(user);
-//	}
-	
 	@Override
 	public String toString() {
 		return "Interests [interestId=" + interestId + ", interestName=" + interestName + "]";
