@@ -80,7 +80,7 @@ public class InterestRepository {
 		Session currentSession = sessionFactory.getCurrentSession();
 		User user = currentSession.get(User.class, id);
 		System.out.println("user: " + user);
-		
+		Hibernate.initialize(user.getInterests());
 		List<Interest> allInterest = user.getInterests();
 		
 //		System.out.println("Interest List: ");
