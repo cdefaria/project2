@@ -53,7 +53,6 @@ public class UserRepository {
 		Session currentSession= sessionFactory.getCurrentSession();
 		
 		String username = u.getUsername();
-		String password = u.getPassword();
 		String email = u.getEmail();
 		
 		List<User> user= currentSession.createQuery("from User user Where user.username=:username")
@@ -71,20 +70,16 @@ public class UserRepository {
 				return u;
 			} else {
 				System.out.println("Email is NOT available");
-				u.setUser_id(-2);
+				u.setUserId(-2);
 				return u;
 			}
 			
 		} else {
 			System.out.println("Username is NOT available");
-			u.setUser_id(-1);
+			u.setUserId(-1);
 			return u;
 		}
-		
-		
-		
-		//currentSession.save(u);
-		//return u;
+			
 	}
 	
 }

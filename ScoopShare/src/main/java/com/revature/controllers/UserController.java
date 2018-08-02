@@ -49,11 +49,17 @@ public class UserController {
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> addUser(@RequestBody User u) {
 		System.out.println("[DEBUG] - In UserController.addUser()");
+		
+		if (u.checkNull()) {
+			System.out.println("Controller something was null");
+			return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+		}
+		
 		User user = userService.addUser(u);
 		
-		System.out.println("user Id = " + user.getUser_id());
-		if (user.getUser_id() == -1 || user.getUser_id() == -2) {
-			System.out.println("working properly");
+		System.out.println("user Id = " + user.getUserId());
+		if (user.getUserId() == -1 || user.getUserId() == -2) {
+			System.out.println("Conflict with username or password");
 			return new ResponseEntity<User>(HttpStatus.CONFLICT);
 		}
 		
