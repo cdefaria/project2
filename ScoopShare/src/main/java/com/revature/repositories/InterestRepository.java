@@ -2,12 +2,14 @@ package com.revature.repositories;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Interest;
+import com.revature.beans.User;
 
 @Repository
 public class InterestRepository {
@@ -40,6 +42,7 @@ public class InterestRepository {
 		System.out.println("[DEBUG] - In InterestRepository.addInterest()...");
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.save(newInterest);
+		
 		return newInterest;
 	}
 	
@@ -70,5 +73,21 @@ public class InterestRepository {
 		
 		currentSession.delete(interest);
 		return 1;
+	}
+	
+	public List<Interest> getAllInterest(int id) {
+		System.out.println("[DEBUG] - In InterestRepository.getAllInterest()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		User user = currentSession.get(User.class, id);
+		System.out.println("user: " + user);
+		
+		List<Interest> allInterest = user.getInterests();
+		
+//		System.out.println("Interest List: ");
+//	    for (Interest interest: allInterest) {
+//	    	System.out.println(interest);
+//	    }
+		
+		return allInterest;
 	}
 }

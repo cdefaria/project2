@@ -112,7 +112,7 @@ public class User implements Serializable {
 		this.lastname = lastname;
 	}
 
-	public User(int userId, String username, String email, String firstname, String lastname) {
+	public User(int userId, String username, String password, String email, String firstname, String lastname) {
 		super();
 		this.userId = userId;
 		this.username = username;
@@ -212,7 +212,7 @@ public class User implements Serializable {
 		this.favorites = favorites;
 	}
 	
-	// add interest to user
+	// add favorites to user
 	public void addFavorites(Article favorite) {
 		if (favorites == null) {
 			favorites = new ArrayList<>();
