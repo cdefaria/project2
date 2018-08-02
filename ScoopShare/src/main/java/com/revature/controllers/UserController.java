@@ -49,9 +49,9 @@ public class UserController {
 		System.out.println("[DEBUG] - In UserController.addUser()");
 		User user = userService.addUser(u);
 		
-		//System.out.println("user Id = " + user.getUser_id());
-		if (user.getUser_id() == -1) {
-			//System.out.println("working properly");
+		System.out.println("user Id = " + user.getUser_id());
+		if (user.getUser_id() == -1 || user.getUser_id() == -2) {
+			System.out.println("working properly");
 			return new ResponseEntity<User>(HttpStatus.CONFLICT);
 		}
 		

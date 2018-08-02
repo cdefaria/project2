@@ -37,14 +37,27 @@ public class UserRepository {
 		
 		String username = u.getUsername();
 		String password = u.getPassword();
+		String email = u.getEmail();
 		
-		List<User> user= currentSession.createQuery("from User user Where user.username=:username AND user.password=:password")
-				.setParameter("username", username).setParameter("password", password).getResultList();
+		List<User> user= currentSession.createQuery("from User user Where user.username=:username")
+				.setParameter("username", username).getResultList();
+		
+		List<User> user2= currentSession.createQuery("from User user Where user.email=:email")
+				.setParameter("email", email).getResultList();
 		
 		if (user.isEmpty()) {
 			System.out.println("Username is available");
-			currentSession.save(u);
-			return user.remove(0);
+			
+			if(user2.isEmpty()) {
+				System.out.println("Email is available");
+				currentSession.save(u);
+				return u;
+			} else {
+				System.out.println("Email is NOT available");
+				u.setUser_id(-2);
+				return u;
+			}
+			
 		} else {
 			System.out.println("Username is NOT available");
 			u.setUser_id(-1);
