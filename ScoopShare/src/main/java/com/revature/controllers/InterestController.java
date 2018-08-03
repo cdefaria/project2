@@ -52,7 +52,7 @@ public class InterestController {
 	}
 	
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public /*ResponseEntity<Interest>*/ List<Interest>addInterest(@RequestBody String[] newInterest) {
+	public ResponseEntity<Interest> /*List<Interest>*/addInterest(@RequestBody String[] newInterest) {
 		System.out.println("[DEBUG] - In InterestController.getInterestById()...");
 		 
 		User user = new User();
@@ -66,8 +66,8 @@ public class InterestController {
 		
 		List<Interest> allUserInterest = userService.addInterest(interest, user);
 		
-		//return new ResponseEntity<Interest>(interest, HttpStatus.CREATED); 
-		return allUserInterest;
+		return new ResponseEntity<Interest>(interest, HttpStatus.CREATED); 
+		//return allUserInterest;
 	}
 
 	@PutMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
@@ -88,17 +88,16 @@ public class InterestController {
 		System.out.println("[DEBUG] - In InterestController.getUserinterest()...");
 			
 		int userId = Integer.parseInt(id[0]);
-		System.out.println("User id: " + userId);
+		//System.out.println("User id: " + userId);
 		
 	    List<Interest> allInterest = interestService.getAllInterest(userId);
 	    
-//	    System.out.println("Interest List: ");
-//	    for (Interest interest: allInterest) {
-//	    	System.out.println(interest);
-//	    }
+	    if (allInterest == null) {
+	    	//System.out.println("allInterest: " + allInterest);
+	    	return null;
+	    }
 	    
-	    System.out.println("Back in InterestController.getUserInterest...");
-	    
+	    //System.out.println("sending interest");
 		return allInterest;
 	}
 	

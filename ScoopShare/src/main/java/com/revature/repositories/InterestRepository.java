@@ -88,6 +88,12 @@ public class InterestRepository {
 //	    	System.out.println(interest);
 //	    }
 		
+		if (allInterest.isEmpty()) {
+			System.out.println("User has no interest so returning null");
+			return null;
+		}
+		
+		System.out.println("Sending found interest");
 		return allInterest;
 	}
 }
