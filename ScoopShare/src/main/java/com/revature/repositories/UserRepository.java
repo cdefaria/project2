@@ -50,6 +50,7 @@ public class UserRepository {
 		}	
 	}
 	
+	@SuppressWarnings("unchecked")
 	public User addUser(User u) {
 		System.out.println("[DEBUG] - In UserRepository.addUser()...");
 		Session currentSession= sessionFactory.getCurrentSession();
@@ -84,6 +85,7 @@ public class UserRepository {
 			
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Interest> addInterest (Interest interest, User user) {
 		System.out.println("[DEBUG] - In UserRepository.addInterest...");
 		Session currentSession= sessionFactory.getCurrentSession();
