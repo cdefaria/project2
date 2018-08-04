@@ -1,12 +1,15 @@
 package com.revature.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.revature.beans.Article;
 import com.revature.beans.Interest;
 import com.revature.beans.User;
 
@@ -105,6 +108,43 @@ public class UserRepository {
 		u.addInterest(i.remove(0));
 		
 		return u.getInterests();
+	}
+	
+	public List<Article> addFavorite (int favoriteId, int userId) {
+		System.out.println("[DEBUG] - In UserRepository.addFavorite()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		User u = currentSession.get(User.class, userId);
+		Article favorite = currentSession.get(Article.class, favoriteId);
+		
+		Hibernate.initialize(u.getFavorites());
+		
+		List<Article> favorites = u.getFavorites();
+		
+		if(favorites == null) {
+			favorites = new ArrayList<>();
+		}
+		
+		favorites.add(favorite);
+		
+		return favorites;
+	}
+	
+	public List<Article> getFavorites (int userId) {
+		System.out.println("[DEBUG] - In User.Repository.getFavorites()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		User u = currentSession.get(User.class, userId);
+		
+		Hibernate.initialize(u.getFavorites());
+		
+		List<Article> favorites = u.getFavorites();
+		
+		if(favorites == null) {
+			return new ArrayList<>();
+		}
+		
+		return favorites;
 	}
 	
 }

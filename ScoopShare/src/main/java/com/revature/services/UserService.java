@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.beans.Article;
 import com.revature.beans.Interest;
 import com.revature.beans.User;
 import com.revature.repositories.UserRepository;
@@ -43,5 +44,15 @@ public class UserService {
 	public List<Interest> addInterest(Interest interest, User user) {
 		System.out.println("[DEBUG] - In UserService.addInterest()...");
 		return userRepo.addInterest(interest, user);
+	}
+	
+	public List<Article> addFavorite(int favoriteId, int userId) {
+		System.out.println("[DEBUG] - In UserService.addFavorite()...");
+		return userRepo.addFavorite(favoriteId, userId);
+	}
+	
+	public List<Article> getFavorites(int userId) {
+		System.out.println("[DEBUG] - In UserService.getFavorites()...");
+		return userRepo.getFavorites(userId);
 	}
 }

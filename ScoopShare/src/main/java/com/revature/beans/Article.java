@@ -53,6 +53,7 @@ public class Article implements Serializable {
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<Rating> ratings;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
