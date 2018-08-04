@@ -42,4 +42,9 @@ public class UserCommentService {
 		System.out.println("[DEBUG] - In ArticleService.updatedArticle()...");
 		return userCommentRepo.updateUserComment(updatedUserComment);
 	}
+	
+	public List<UserComment> getCommentsByUserId(int userId) {
+		System.out.println("[DEBUG] - In ArticleService.getCommentsByUserId()...");
+		return userCommentRepo.getCommentsByUserId(userId);
+	}
 }

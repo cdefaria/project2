@@ -59,6 +59,16 @@ public class UserCommentController {
 	    return userComment;
 	}
 	
+	@PostMapping(value="by-user",consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<UserComment>> getCommentsByUserId(@RequestBody int userId) {
+		System.out.println("[DEBUG] - In UserCommentController.getCommentsByUserId()...");
+		List<UserComment> comments = userCommentService.getCommentsByUserId(userId);
+		if(comments == null) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<List<UserComment>>(comments,HttpStatus.OK);
+	}
+	
 	// 
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserComment> addUserComment(@RequestBody String[] info) {

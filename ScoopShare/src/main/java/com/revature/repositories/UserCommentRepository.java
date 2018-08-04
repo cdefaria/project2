@@ -1,7 +1,9 @@
 package com.revature.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,4 +86,25 @@ public class UserCommentRepository {
 		return userComment;
 	}
 	
+	public List<UserComment> getCommentsByUserId(int userId) {
+
+		System.out.println("[DEBUG] - In UserRepository.getCommentsByUserId()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		User currentUser = currentSession.get(User.class, userId);
+		
+		if(currentUser == null) {
+			return null;
+		}
+		
+		Hibernate.initialize(currentUser.getUserComments());
+		
+		List<UserComment> comments = currentUser.getUserComments();
+		
+		if(comments == null) {
+			comments = new ArrayList<UserComment>();
+		}
+		
+		return comments;
+	}
 }
