@@ -46,7 +46,7 @@ public class ArticleRepository {
 		
 		System.out.println("[DEBUG] - In FlashCardRepository.updateArticle()...");
 		Session currentSession = sessionFactory.getCurrentSession();
-		Article article = currentSession.get(Article.class, updatedArticle.getArticle_id());
+		Article article = currentSession.get(Article.class, updatedArticle.getArticleId());
 		
 		if(article == null) {
 			return article;

@@ -2,13 +2,16 @@ package com.revature.repositories;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Interest;
+import com.revature.beans.User;
 
-
+@Repository
 public class InterestRepository {
 
 	static {
@@ -22,7 +25,8 @@ public class InterestRepository {
 		
 		System.out.println("[DEBUG] - InterestRepository.getAll...");
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from Article", Interest.class).getResultList();
+		return session.createQuery("from Interest", Interest.class).getResultList();
+	
 	}
 	
 	public Interest getById(int id) {
@@ -38,6 +42,7 @@ public class InterestRepository {
 		System.out.println("[DEBUG] - In InterestRepository.addInterest()...");
 		Session currentSession = sessionFactory.getCurrentSession();
 		currentSession.save(newInterest);
+		
 		return newInterest;
 	}
 	
@@ -51,7 +56,8 @@ public class InterestRepository {
 			return interest;
 		}
 		
-		interest = updatedInterest;
+		System.out.println("Interest found and updated");
+		interest.setInterestName(updatedInterest.getInterestName());
 		return interest;
 	}
 	
@@ -67,5 +73,27 @@ public class InterestRepository {
 		
 		currentSession.delete(interest);
 		return 1;
+	}
+	
+	public List<Interest> getAllInterest(int id) {
+		System.out.println("[DEBUG] - In InterestRepository.getAllInterest()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		User user = currentSession.get(User.class, id);
+		System.out.println("user: " + user);
+		Hibernate.initialize(user.getInterests());
+		List<Interest> allInterest = user.getInterests();
+		
+//		System.out.println("Interest List: ");
+//	    for (Interest interest: allInterest) {
+//	    	System.out.println(interest);
+//	    }
+		
+		if (allInterest.isEmpty()) {
+			System.out.println("User has no interest so returning null");
+			return null;
+		}
+		
+		System.out.println("Sending found interest");
+		return allInterest;
 	}
 }
