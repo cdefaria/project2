@@ -55,19 +55,23 @@ public class UserComment implements Serializable {
 
 	public UserComment() {}
 
-	public UserComment(int userId, int articleId, String comments) {
-		super();
-		this.user.setUserId(userId);
-		this.article.setArticleId(articleId);
-		this.comments = comments;
-	}
-	public UserComment(int commentId, String comments, int userId, int articleId) {
-		super();
-		this.commentId = commentId;
-		this.user.setUserId(userId);
-		this.article.setArticleId(articleId);
-		this.comments = comments;
-	}
+//	public UserComment(int userId, int articleId, String comments) {
+//		super();
+//		this.user = new User();
+//		this.article = new Article();
+//		this.user.setUserId(userId);
+//		this.article.setArticleId(articleId);//////////////////////////////////commented out
+//		this.comments = comments;
+//	}
+	
+	
+//	public UserComment(int commentId, String comments, int userId, int articleId) {
+//		super();
+//		this.commentId = commentId;
+//		this.user.setUserId(userId);
+//		//this.article.setArticleId(articleId);
+//		this.comments = comments;
+//	}
 	public int getCommentId() {
 		return commentId;
 	}
@@ -80,28 +84,38 @@ public class UserComment implements Serializable {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public int getUserId() {
-		return user.getUserId();
+//	public int getUserId() {
+//		return user.getUserId();
+//	}
+//	public void setUserId(int userId) {
+//		this.user.setUserId(userId);
+//	}
+//	public int getArticleId() {
+//		return article.getArticleId();
+//	}
+//	public void setArticleId(int articleId) {
+//		this.article.setArticleId(articleId);
+//	}
+	
+	public void addArticle(Article addArticle) {
+		article = addArticle;
 	}
-	public void setUserId(int userId) {
-		this.user.setUserId(userId);
+	
+	public void addUser(User addUser) {
+		user = addUser;
 	}
-	public int getArticleId() {
-		return article.getArticleId();
-	}
-	public void setArticleId(int articleId) {
-		this.article.setArticleId(articleId);
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + article.getArticleId();
+		result = prime * result + ((article == null) ? 0 : article.hashCode());
 		result = prime * result + commentId;
 		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
-		result = prime * result + this.user.getUserId();
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -111,7 +125,10 @@ public class UserComment implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		UserComment other = (UserComment) obj;
-		if (article.getArticleId() != other.article.getArticleId())
+		if (article == null) {
+			if (other.article != null)
+				return false;
+		} else if (!article.equals(other.article))
 			return false;
 		if (commentId != other.commentId)
 			return false;
@@ -120,10 +137,14 @@ public class UserComment implements Serializable {
 				return false;
 		} else if (!comments.equals(other.comments))
 			return false;
-		if (this.user.getUserId() != other.user.getUserId())
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
 		return "UserComments [commentId=" + commentId + ", userId=" + user.getUserId() + ", articleId=" + article.getArticleId()

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Interest;
 import com.revature.beans.User;
+import com.revature.beans.UserComment;
 
 @Repository
 public class UserRepository {
@@ -105,4 +106,17 @@ public class UserRepository {
 		return u.getInterests();
 	}
 	
+	public UserComment addComment (User user, UserComment comment) {
+		System.out.println("[DEBUG] - In UserRepository.addComment...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		User currentUser = currentSession.get(User.class, user.getUserId());
+		UserComment addComment = currentSession.get(UserComment.class, comment.getCommentId());
+		
+		if (currentUser == null || addComment == null) {
+			return null;
+		}
+		currentUser.addUserComments(addComment);
+		return addComment; 
+	}
 }

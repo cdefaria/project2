@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.beans.Article;
+import com.revature.beans.User;
 import com.revature.beans.UserComment;
+import com.revature.services.ArticleService;
 import com.revature.services.UserCommentService;
+import com.revature.services.UserService;
 
 // don't send back vague codes such as: 200, 300, 400, and 500 if it can be avoided.
 // user plural when giving value to RequestMapping
@@ -30,6 +34,12 @@ public class UserCommentController {
 	
 	@Autowired
 	private UserCommentService userCommentService;
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private ArticleService articleService;
 	
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<UserComment> getAll() {
@@ -49,10 +59,41 @@ public class UserCommentController {
 	    return userComment;
 	}
 	
+	// 
 	@PostMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserComment> addUserComment(@RequestBody UserComment newUserComment) {
+	public ResponseEntity<UserComment> addUserComment(@RequestBody String[] info) {
 		System.out.println("[DEBUG] - In ArticleController.getArticleById()...");
-		UserComment userComment = userCommentService.addUserComment(newUserComment);
+		
+		System.out.println("received: ");
+		for (String s : info) {
+			System.out.println(s);
+		}
+		int userId = Integer.parseInt(info[0]);
+		int articleId = Integer.parseInt(info[1]);
+		String comment = info[2];
+	
+		
+		UserComment userComment = new UserComment(); 
+		userComment.setComments(comment);
+
+		
+		Article article = new Article();
+		
+		article.setArticleId(articleId);
+		
+		User user = new User();
+		user.setUserId(userId);
+		
+		// add comment info.
+		userCommentService.addUserComment(userComment, articleId, userId);
+		
+		System.out.println("Back in userController");
+		// add comment to article info.
+		articleService.addComment(article, userComment);
+		
+		// add comment to user info.
+		userService.addComment(user, userComment);
+		
 		return new ResponseEntity<UserComment>(userComment, HttpStatus.CREATED); 
 	}
 	

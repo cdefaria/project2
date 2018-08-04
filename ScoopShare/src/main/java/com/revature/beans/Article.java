@@ -53,6 +53,7 @@ public class Article implements Serializable {
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private List<Rating> ratings;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.DETACH, CascadeType.REFRESH
@@ -75,13 +76,13 @@ public class Article implements Serializable {
 		this.url = url;
 	}
 
-	public Article(int articleId, String title, String description, String url) {
-		super();
-		this.articleId = articleId;
-		this.title = title;
-		this.description = description;
-		this.url = url;
-	}
+//	public Article(int articleId, String title, String description, String url) {
+//		super();
+//		this.articleId = articleId;
+//		this.title = title;
+//		this.description = description;
+//		this.url = url;
+//	}
 
 	public int getArticleId() {
 		return articleId;
@@ -106,7 +107,7 @@ public class Article implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
 	public String getUrl() {
 		return url;
 	}

@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,9 +35,17 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Article> getAllArticles() {
+	public ResponseEntity<List<Article>> getAllArticles() {
 		System.out.println("[DEBUG] - In ArticleController.getAllArticles()...");
-		return articleService.getAll();
+		List<Article> allArticles = articleService.getAll();
+		System.out.println("Got all articles and back in ArticleController");
+		
+		System.out.println("Articles: ");
+		for (Article list: allArticles) {
+			System.out.println(list);
+		}
+		
+		return new ResponseEntity<>(allArticles, HttpStatus.OK);
 	}
 	
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.beans.Article;
+import com.revature.beans.User;
 import com.revature.beans.UserComment;
 
 import org.springframework.stereotype.Repository;
@@ -36,11 +37,29 @@ public class UserCommentRepository {
 		
 	}
 	
-	public UserComment addUserComment(UserComment newUserComment) {
+	public UserComment addUserComment(UserComment newUserComment, int articleId, int userId) {
 		
 		System.out.println("[DEBUG] - In FlashCardRepository.addArticle()...");
 		Session currentSession = sessionFactory.getCurrentSession();
+		
+		//System.out.println("Article ID in Repository: " + articleId);
+		Article addArticle = currentSession.get(Article.class, articleId);
+		//System.out.println("Article: " + addArticle);
+		
+		User addUser = currentSession.get(User.class, userId);
+		System.out.println("User: " + addUser);
+		
+		
+		if (addArticle == null || addUser == null) {
+			System.out.println("No ARTICLE or USER exist with those IDs");
+			return null;
+		}
+		System.out.println("an Article and User was found");
+		newUserComment.addArticle(addArticle);
+		newUserComment.addUser(addUser);
+		
 		currentSession.save(newUserComment);
+		System.out.println("new UserComment was saved successfully");
 		return newUserComment;
 	}
 	

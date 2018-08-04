@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Article;
+import com.revature.beans.User;
 import com.revature.beans.UserComment;
 import com.revature.repositories.ArticleRepository;
 import com.revature.repositories.UserCommentRepository;
@@ -32,9 +33,9 @@ public class UserCommentService {
 		return userCommentRepo.getById(Id);
 	}
 	
-	public UserComment addUserComment(UserComment newUserComment) {
+	public UserComment addUserComment(UserComment newUserComment, int articleId, int userId) {
 		System.out.println("[DEBUG] - In ArticleService.addArticle()...");
-		return userCommentRepo.addUserComment(newUserComment);
+		return userCommentRepo.addUserComment(newUserComment, articleId, userId);
 	}
 	
 	public UserComment updateUserComment(UserComment updatedUserComment) {

@@ -80,13 +80,9 @@ public class InterestRepository {
 		Session currentSession = sessionFactory.getCurrentSession();
 		User user = currentSession.get(User.class, id);
 		System.out.println("user: " + user);
-		Hibernate.initialize(user.getInterests());
-		List<Interest> allInterest = user.getInterests();
 		
-//		System.out.println("Interest List: ");
-//	    for (Interest interest: allInterest) {
-//	    	System.out.println(interest);
-//	    }
+		Hibernate.initialize(user.getInterests());//////////////////////////////////////
+		List<Interest> allInterest = user.getInterests();
 		
 		if (allInterest.isEmpty()) {
 			System.out.println("User has no interest so returning null");
