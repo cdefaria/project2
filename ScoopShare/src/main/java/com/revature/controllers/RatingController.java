@@ -64,4 +64,17 @@ public class RatingController {
 		
 		return new ResponseEntity<Rating>(HttpStatus.OK); //code 200
 	}
+	
+	@GetMapping(value="/article-{articleId}",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Rating>> getByArticleId(@PathVariable int articleId) {
+		System.out.println("[DEBUG] - In ArticleController.getByArticleId()...");
+		List<Rating> ratings = ratingService.getByArticleId(articleId);
+		
+		if(ratings == null) {
+			// Throw error here
+			return null;
+		}
+		
+		return new ResponseEntity<List<Rating>>(ratings,HttpStatus.OK);
+	}
 }

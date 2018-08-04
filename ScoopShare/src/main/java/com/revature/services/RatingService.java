@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.revature.beans.Article;
 import com.revature.beans.Rating;
+import com.revature.repositories.ArticleRepository;
 import com.revature.repositories.RatingRepository;
 
 @Service
@@ -38,5 +40,16 @@ public class RatingService {
 	public Rating updateRating(Rating updatedRating) {
 		System.out.println("[DEBUG] - In RatingService.updatedRating()...");
 		return ratingRepo.updateRating(updatedRating);
+	}
+	
+	public List<Rating> getByArticleId(int articleId) {
+		ArticleRepository articleRepo = new ArticleRepository();
+		Article article = articleRepo.getById(articleId);
+		System.out.println(article);
+		if(article == null) {
+			return null;
+		} else {
+			return ratingRepo.getByArticleId(articleId);
+		}
 	}
 }

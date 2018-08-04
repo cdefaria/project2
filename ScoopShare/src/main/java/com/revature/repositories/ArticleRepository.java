@@ -30,6 +30,7 @@ public class ArticleRepository {
 		
 		System.out.println("[DEBUG] - ArticleRepository.getById...");
 		Session session = sessionFactory.getCurrentSession();
+		System.out.println(id);
 		return session.get(Article.class, id);
 		
 	}

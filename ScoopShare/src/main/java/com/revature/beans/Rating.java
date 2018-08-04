@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Rating implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonIgnore
 	@EmbeddedId
 	UserArticles id;
 	
@@ -56,7 +57,17 @@ public class Rating implements Serializable {
 		super();
 		this.id.setUserId(userId);
 		this.id.setArticleId(articleId);
+		this.user.setUserId(userId);
+		this.article.setArticleId(articleId);
 		this.rating = rating;
+	}
+
+	public UserArticles getId() {
+		return id;
+	}
+
+	public void setId(UserArticles id) {
+		this.id = id;
 	}
 
 	public int getUserId() {
