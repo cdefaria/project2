@@ -101,7 +101,7 @@ public class UserCommentController {
 
 		int userId = Integer.parseInt(id[0]);
 		
-		List<UserComment> allComments = userCommentService.getAllComments(userId);
+		List<UserComment> allComments = userCommentService.getAllUserComments(userId);
 		
 		if (allComments == null) {
 	    	System.out.println("allComments: " + allComments);

@@ -86,7 +86,7 @@ public class UserCommentRepository {
 		return userComment;
 	}
 	
-	public List<UserComment> getAllComments(int id) {
+	public List<UserComment> getAllUserComments(int id) {
 		System.out.println("[DEBUG] - In UserCommentRepository.getAllComments()...");
 		Session currentSession = sessionFactory.getCurrentSession();
 		User user = currentSession.get(User.class, id);

@@ -44,8 +44,8 @@ public class UserCommentService {
 		return userCommentRepo.updateUserComment(updatedUserComment);
 	}
 	
-	public List<UserComment> getAllComments(int id) {
+	public List<UserComment> getAllUserComments(int id) {
 		System.out.println("[DEBUG] - In UserCommentService()...");
-		return userCommentRepo.getAllComments(id);
+		return userCommentRepo.getAllUserComments(id);
 	}
 }
