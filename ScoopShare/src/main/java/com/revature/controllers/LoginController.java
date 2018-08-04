@@ -34,8 +34,8 @@ public class LoginController {
 		if (found == null) {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		} else {
-			
-			return new ResponseEntity<User>(HttpStatus.ACCEPTED);
+			found.setPassword("*****");
+			return new ResponseEntity<User>(found,HttpStatus.ACCEPTED);
 		}
 	}
 }
