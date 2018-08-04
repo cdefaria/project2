@@ -7,42 +7,39 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Article;
+import com.revature.beans.User;
 import com.revature.beans.UserComment;
 import com.revature.repositories.ArticleRepository;
+import com.revature.repositories.UserCommentRepository;
 
 @Service
 @Transactional
-public class ArticleService {
+public class UserCommentService {
 	
 	static {
 		System.out.println("[DEBUG] - Article instantiated...");
 	}
 	
 	@Autowired
-	ArticleRepository articleRepo;
+	UserCommentRepository userCommentRepo;
 	
-	public List<Article> getAll() {
+	public List<UserComment> getAll() {
 		System.out.println("[DEBUG] - In ArticleService.getAll()...");
-		return articleRepo.getAll();
+		return userCommentRepo.getAll();
 	}
 	
-	public Article getById(int Id) {
+	public UserComment getById(int Id) {
 		System.out.println("[DEBUG] - In ArticleService.geById()...");
-		return articleRepo.getById(Id);
+		return userCommentRepo.getById(Id);
 	}
 	
-	public Article addArticle(Article newArticle) {
+	public UserComment addUserComment(String comment, int articleId, int userId) {
 		System.out.println("[DEBUG] - In ArticleService.addArticle()...");
-		return articleRepo.addArticle(newArticle);
+		return userCommentRepo.addUserComment(comment, articleId, userId);
 	}
 	
-	public Article updateArticle(Article updatedArticle) {
+	public UserComment updateUserComment(UserComment updatedUserComment) {
 		System.out.println("[DEBUG] - In ArticleService.updatedArticle()...");
-		return articleRepo.updateArticle(updatedArticle);
-	}
-	
-	public UserComment addComment(Article article, UserComment comment) {
-		System.out.println("[DEBUG] - In ArticleService.addComment...");
-		return articleRepo.addComment(article, comment);
+		return userCommentRepo.updateUserComment(updatedUserComment);
 	}
 }

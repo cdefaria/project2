@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.beans.Article;
+import com.revature.beans.UserComment;
+
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,7 +25,12 @@ public class ArticleRepository {
 		
 		System.out.println("[DEBUG] - ArticleRepository.getAll...");
 		Session session = sessionFactory.getCurrentSession();
-		return session.createQuery("from Article", Article.class).getResultList();
+		List<Article> allArticles = session.createQuery("from Article", Article.class).getResultList();
+		if (allArticles.isEmpty()) {
+			return null;
+		}
+		
+		return allArticles;
 	}
 	
 	public Article getById(int id) {
@@ -46,7 +53,7 @@ public class ArticleRepository {
 		
 		System.out.println("[DEBUG] - In FlashCardRepository.updateArticle()...");
 		Session currentSession = sessionFactory.getCurrentSession();
-		Article article = currentSession.get(Article.class, updatedArticle.getArticle_id());
+		Article article = currentSession.get(Article.class, updatedArticle.getArticleId());
 		
 		if(article == null) {
 			return article;
@@ -54,6 +61,20 @@ public class ArticleRepository {
 		
 		article = updatedArticle;
 		return article;
+	}
+	
+	public UserComment addComment(Article article, UserComment comment) {
+		System.out.println("[DEBUG] - In ArticleRepository.addComment...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Article currentArticle = currentSession.get(Article.class, article.getArticleId());
+		UserComment addComment = currentSession.get(UserComment.class, comment.getCommentId());
+		
+		if (currentArticle == null || addComment == null) {
+			return null;
+		}
+		currentArticle.addUserComments(addComment);
+		return addComment;
 	}
 	
 }
