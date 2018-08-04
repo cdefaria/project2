@@ -98,13 +98,60 @@ public class UserComment implements Serializable {
 //	}
 	
 	public void addArticle(Article addArticle) {
-		article = addArticle;
+		this.article = addArticle;
 	}
 	
 	public void addUser(User addUser) {
-		user = addUser;
+		this.user = addUser;
 	}
 	
+//	@Override
+//	public int hashCode() {
+//		final int prime = 31;
+//		int result = 1;
+//		result = prime * result + ((article == null) ? 0 : article.hashCode());
+//		result = prime * result + commentId;
+//		result = prime * result + ((comments == null) ? 0 : comments.hashCode());
+//		result = prime * result + ((user == null) ? 0 : user.hashCode());
+//		return result;
+//	}
+//
+//	@Override
+//	public boolean equals(Object obj) {
+//		if (this == obj)
+//			return true;
+//		if (obj == null)
+//			return false;
+//		if (getClass() != obj.getClass())
+//			return false;
+//		UserComment other = (UserComment) obj;
+//		if (article == null) {
+//			if (other.article != null)
+//				return false;
+//		} else if (!article.equals(other.article))
+//			return false;
+//		if (commentId != other.commentId)
+//			return false;
+//		if (comments == null) {
+//			if (other.comments != null)
+//				return false;
+//		} else if (!comments.equals(other.comments))
+//			return false;
+//		if (user == null) {
+//			if (other.user != null)
+//				return false;
+//		} else if (!user.equals(other.user))
+//			return false;
+//		return true;
+//	}
+
+	
+	@Override
+	public String toString() {
+		return "UserComment [commentId=" + commentId + ", user=" + user + ", article=" + article + ", comments="
+				+ comments + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -145,10 +192,12 @@ public class UserComment implements Serializable {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "UserComments [commentId=" + commentId + ", userId=" + user.getUserId() + ", articleId=" + article.getArticleId()
-				+ ", comments=" + comments + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "UserComments [commentId=" + commentId + ", userId=" + user.getUserId() + ", articleId=" + article.getArticleId()
+//				+ ", comments=" + comments + "]";
+//	}
+	
+	
 
 }

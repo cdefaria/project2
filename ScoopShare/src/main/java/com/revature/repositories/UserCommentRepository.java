@@ -37,7 +37,7 @@ public class UserCommentRepository {
 		
 	}
 	
-	public UserComment addUserComment(UserComment newUserComment, int articleId, int userId) {
+	public UserComment addUserComment(String comment, int articleId, int userId) {
 		
 		System.out.println("[DEBUG] - In FlashCardRepository.addArticle()...");
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -55,12 +55,19 @@ public class UserCommentRepository {
 			return null;
 		}
 		System.out.println("an Article and User was found");
-		newUserComment.addArticle(addArticle);
-		newUserComment.addUser(addUser);
+		UserComment userComment = new UserComment();
+		userComment.setComments(comment);
 		
-		currentSession.save(newUserComment);
+		userComment.addArticle(addArticle);
+		userComment.addUser(addUser);
+		
+		currentSession.save(userComment);
+		
+
+		
+		
 		System.out.println("new UserComment was saved successfully");
-		return newUserComment;
+		return userComment;
 	}
 	
 	public UserComment updateUserComment (UserComment updatedUserComment) {

@@ -65,18 +65,16 @@ public class UserCommentController {
 		System.out.println("[DEBUG] - In ArticleController.getArticleById()...");
 		
 		System.out.println("received: ");
-		for (String s : info) {
-			System.out.println(s);
-		}
+//		for (String s : info) {
+//			System.out.println(s);
+//		}
 		int userId = Integer.parseInt(info[0]);
 		int articleId = Integer.parseInt(info[1]);
 		String comment = info[2];
 	
-		
 		UserComment userComment = new UserComment(); 
 		userComment.setComments(comment);
 
-		
 		Article article = new Article();
 		
 		article.setArticleId(articleId);
@@ -85,7 +83,7 @@ public class UserCommentController {
 		user.setUserId(userId);
 		
 		// add comment info.
-		userCommentService.addUserComment(userComment, articleId, userId);
+		userCommentService.addUserComment(comment, articleId, userId);
 		
 		System.out.println("Back in userController");
 		// add comment to article info.
@@ -93,7 +91,7 @@ public class UserCommentController {
 		
 		// add comment to user info.
 		userService.addComment(user, userComment);
-		
+		System.out.println("last part of userController");
 		return new ResponseEntity<UserComment>(userComment, HttpStatus.CREATED); 
 	}
 	
