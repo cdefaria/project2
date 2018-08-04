@@ -2,11 +2,13 @@ package com.revature.repositories;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.beans.Article;
+import com.revature.beans.Interest;
 import com.revature.beans.User;
 import com.revature.beans.UserComment;
 
@@ -82,6 +84,24 @@ public class UserCommentRepository {
 		
 		userComment = updatedUserComment;
 		return userComment;
+	}
+	
+	public List<UserComment> getAllComments(int id) {
+		System.out.println("[DEBUG] - In UserCommentRepository.getAllComments()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		User user = currentSession.get(User.class, id);
+		System.out.println("user: " + user);
+		
+		Hibernate.initialize(user.getUserComments());//////////////////////////////////////
+		List<UserComment> allComments = user.getUserComments();
+		
+		if (allComments.isEmpty()) {
+			System.out.println("User has no comments so returning null");
+			return null;
+		}
+		
+		System.out.println("Sending found comments");
+		return allComments;
 	}
 	
 }

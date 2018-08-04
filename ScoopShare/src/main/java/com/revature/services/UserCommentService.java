@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Article;
+import com.revature.beans.Interest;
 import com.revature.beans.User;
 import com.revature.beans.UserComment;
 import com.revature.repositories.ArticleRepository;
@@ -41,5 +42,10 @@ public class UserCommentService {
 	public UserComment updateUserComment(UserComment updatedUserComment) {
 		System.out.println("[DEBUG] - In ArticleService.updatedArticle()...");
 		return userCommentRepo.updateUserComment(updatedUserComment);
+	}
+	
+	public List<UserComment> getAllComments(int id) {
+		System.out.println("[DEBUG] - In UserCommentService()...");
+		return userCommentRepo.getAllComments(id);
 	}
 }
