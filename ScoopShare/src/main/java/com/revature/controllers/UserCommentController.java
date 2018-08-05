@@ -105,6 +105,26 @@ public class UserCommentController {
 		return new ResponseEntity<UserComment>(userComment, HttpStatus.CREATED); 
 	}
 	
+	@PostMapping(value="/get", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<UserComment> getUserComment(@RequestBody String[] id) { 
+		System.out.println("[DEBUG] - In UserCommentController.getUserComment()...");
+
+		int userId = Integer.parseInt(id[0]);
+		
+		List<UserComment> allComments = userCommentService.getAllComments(userId);
+		
+		if (allComments == null) {
+	    	System.out.println("allComments: " + allComments);
+
+			return null;
+		}
+		System.out.println("sending comments");
+		return allComments;
+		
+	}
+	
+	
+	
 	@PutMapping(consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserComment> updateUserComment(@RequestBody UserComment updatedUserComment) {
 		System.out.println("[DEBUG] - In ArticleController.updateArticle()...");
