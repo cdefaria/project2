@@ -48,8 +48,8 @@ public class UserCommentService {
 		System.out.println("[DEBUG] - In ArticleService.getCommentsByUserId()...");
 		return userCommentRepo.getCommentsByArticleId(articleId);
 		
-	public List<UserComment> getAllComments(int id) {
+	public List<UserComment> getAllUserComments(int id) {
 		System.out.println("[DEBUG] - In UserCommentService()...");
-		return userCommentRepo.getAllComments(id);
+		return userCommentRepo.getAllUserComments(id);
 	}
 }
