@@ -86,12 +86,12 @@ public class UserCommentRepository {
 		return userComment;
 	}
 	
-	public List<UserComment> getCommentsByUserId(int userId) {
+	public List<UserComment> getCommentsByArticleId(int articleId) {
 
 		System.out.println("[DEBUG] - In UserRepository.getCommentsByUserId()...");
 		Session currentSession = sessionFactory.getCurrentSession();
 		
-		User currentUser = currentSession.get(User.class, userId);
+		Article currentUser = currentSession.get(Article.class, articleId);
 		
 		if(currentUser == null) {
 			return null;

@@ -59,10 +59,10 @@ public class UserCommentController {
 	    return userComment;
 	}
 	
-	@PostMapping(value="by-user",consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<UserComment>> getCommentsByUserId(@RequestBody int userId) {
+	@GetMapping(value="article-{articleId}",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<UserComment>> getCommentsByArticleId(@PathVariable int articleId) {
 		System.out.println("[DEBUG] - In UserCommentController.getCommentsByUserId()...");
-		List<UserComment> comments = userCommentService.getCommentsByUserId(userId);
+		List<UserComment> comments = userCommentService.getCommentsByArticleId(articleId);
 		if(comments == null) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
