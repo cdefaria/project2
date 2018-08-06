@@ -76,6 +76,7 @@ public class UserService {
 			e.printStackTrace();
 			return -2;
 		}
+	}
 		
 	public Rating addRating(User user, Rating rating) {
 		System.out.println("[DEBUG] - In UserService.addRating");
