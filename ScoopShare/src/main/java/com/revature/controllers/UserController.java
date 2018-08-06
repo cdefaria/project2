@@ -83,7 +83,7 @@ public class UserController {
 				return new ResponseEntity<>(favorites,HttpStatus.ACCEPTED);
 			} finally { } // TODO: Catch invalid Integer Parsing
 		} else {
-			throw new InvalidParametersException("String length was " + values.length + ", expecting a length of 2. [userId,article]");
+			throw new InvalidParametersException("String length was " + values.length + ", expecting a length of 2. [userId,articleId]");
 		}
 	}
 	
@@ -98,10 +98,23 @@ public class UserController {
 				return new ResponseEntity<>(favorites,HttpStatus.ACCEPTED);
 			} finally { } // TODO: Catch invalid Integer Parsing
 		} else {
-			throw new InvalidParametersException("String length was " + values.length + ", expecting a length of 1. [userId,article]");
+			throw new InvalidParametersException("String length was " + values.length + ", expecting a length of 1. [userId]");
 		}
 	}
 	
+	@PostMapping(value="/email",consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> sendEmail(@RequestBody String[] values) {
+		if(values.length == 4) {
+			int result = userService.sendEmail(values);
+			if(result == 1) {
+				return new ResponseEntity<String>("Email sent.",HttpStatus.OK);
+			} else {
+				return new ResponseEntity<String>("Email not sent.",HttpStatus.CONFLICT);
+			}
+		} else {
+			throw new InvalidParametersException("String length was " + values.length + ", expecting a length of 4. [userEmail,reciepientEmail,subject,body]");
+		}
+	}
 	@ExceptionHandler
 	public ResponseEntity<InvalidParametersErrorResponse> invalidParameters(InvalidParametersException e) {
 		InvalidParametersErrorResponse error = new InvalidParametersErrorResponse();

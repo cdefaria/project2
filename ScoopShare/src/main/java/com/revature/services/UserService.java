@@ -11,6 +11,7 @@ import com.revature.beans.Interest;
 import com.revature.beans.User;
 import com.revature.beans.UserComment;
 import com.revature.repositories.UserRepository;
+import com.revature.util.EmailUtility;
 
 @Service
 @Transactional
@@ -60,5 +61,19 @@ public class UserService {
 	public List<Article> getFavorites(int userId) {
 		System.out.println("[DEBUG] - In UserService.getFavorites()...");
 		return userRepo.getFavorites(userId);
+	}
+	
+	public int sendEmail(String[] values) {
+		EmailUtility email = new EmailUtility();
+		email.setTo(values[0]);
+		email.setFrom(values[1]);
+		email.setSubject(values[2]);
+		email.setBody(values[3]);
+		try {
+			return email.sendEmail();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -2;
+		}
 	}
 }
