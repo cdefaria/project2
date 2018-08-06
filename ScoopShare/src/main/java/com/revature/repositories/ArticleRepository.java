@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.revature.beans.Article;
 import com.revature.beans.UserComment;
+import com.revature.beans.Rating;
 
 import org.springframework.stereotype.Repository;
 
@@ -37,6 +38,7 @@ public class ArticleRepository {
 		
 		System.out.println("[DEBUG] - ArticleRepository.getById...");
 		Session session = sessionFactory.getCurrentSession();
+		System.out.println(id);
 		return session.get(Article.class, id);
 		
 	}
@@ -77,4 +79,17 @@ public class ArticleRepository {
 		return addComment;
 	}
 	
+	public Rating addRating(Article article, Rating rating) {
+		System.out.println("[DEBUG] - In ArticleRepository.addRating...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Article currentArticle = currentSession.get(Article.class, article.getArticleId());
+		Rating addRating = currentSession.get(Rating.class, rating.getRatingId());
+		
+		if (currentArticle == null || addRating == null) {
+			return null;
+		}
+		currentArticle.addRating(addRating);
+		return addRating;
+	}
 }

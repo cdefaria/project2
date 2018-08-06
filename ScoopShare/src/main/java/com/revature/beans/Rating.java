@@ -4,11 +4,13 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -19,17 +21,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Component
 @Table(name="RATINGS")
+@SequenceGenerator(name="ratingSeq", sequenceName="RATING_SEQ", allocationSize=1)
 public class Rating implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	UserArticles id;
+	@Id
+	@NotNull
+	@Column(name="rating_id",nullable=false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="ratingSeq")
+	private int ratingId;
 	
 	@Column(name="rating")
-	private int rating;
+	private float rating;
 	
 	@JsonIgnore
-	@MapsId("userId")
+	//@MapsId("userId")
 	@NotNull
 	@ManyToOne(cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
@@ -39,7 +45,7 @@ public class Rating implements Serializable {
 	User user;
 	
 	@JsonIgnore
-	@MapsId("articleId")
+	//@MapsId("articleId")
 	@NotNull
 	@ManyToOne(cascade= {
 			CascadeType.PERSIST, CascadeType.MERGE,
@@ -52,42 +58,58 @@ public class Rating implements Serializable {
 		
 	}
 
-	public Rating(int userId, int articleId, int rating) {
+	public Rating(int rating) {
 		super();
-		this.id.setUserId(userId);
-		this.id.setArticleId(articleId);
 		this.rating = rating;
 	}
 
-	public int getUserId() {
-		return id.getUserId();
+	public Rating(int rating, @NotNull User user, @NotNull Article article) {
+		super();
+		this.rating = rating;
+		this.user = user;
+		this.article = article;
 	}
 
-	public void setUserId(int userId) {
-		this.id.setUserId(userId);
+	public int getRatingId() {
+		return ratingId;
 	}
 
-	public int getArticleId() {
-		return id.getArticleId();
-	}
+//	public void setRatingId(int ratingId) {
+//		this.ratingId = ratingId;
+//	}
 
-	public void setArticleId(int articleId) {
-		this.id.setArticleId(articleId);
-	}
-
-	public int getRating() {
+	public float getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(float rating) {
 		this.rating = rating;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Article getArticle() {
+		return article;
+	}
+
+	public void setArticle(Article article) {
+		this.article = article;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + rating;
+		result = prime * result + ((article == null) ? 0 : article.hashCode());
+		result = prime * result + Float.floatToIntBits(rating);
+		result = prime * result + ratingId;
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -100,18 +122,25 @@ public class Rating implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Rating other = (Rating) obj;
-		if (id.getArticleId() != other.id.getArticleId())
+		if (article == null) {
+			if (other.article != null)
+				return false;
+		} else if (!article.equals(other.article))
 			return false;
-		if (rating != other.rating)
+		if (Float.floatToIntBits(rating) != Float.floatToIntBits(other.rating))
 			return false;
-		if (id.getUserId() != other.id.getUserId())
+		if (ratingId != other.ratingId)
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Ratings [userId=" + id.getUserId() + ", articleId=" + id.getArticleId() + ", rating=" + rating + "]";
+		return "Rating [ratingId=" + ratingId + ", rating=" + rating + ", user=" + user + ", article=" + article + "]";
 	}
-	
 }

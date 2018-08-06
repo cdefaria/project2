@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.revature.beans.Article;
 import com.revature.beans.Interest;
+import com.revature.beans.Rating;
 import com.revature.beans.User;
 import com.revature.beans.UserComment;
 
@@ -159,6 +160,20 @@ public class UserRepository {
 		}
 		
 		return favorites;
+	}
+	
+	public Rating addRating (User user, Rating rating) {
+		System.out.println("[DEBUG] - In UserRepository.addRating...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		User currentUser = currentSession.get(User.class, user.getUserId());
+		Rating addRating = currentSession.get(Rating.class, rating.getRatingId());
+		
+		if (currentUser == null || addRating == null) {
+			return null;
+		}
+		currentUser.addRating(addRating);
+		return addRating; 
 	}
 	
 }

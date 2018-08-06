@@ -49,9 +49,9 @@ public class ArticleController {
 	}
 	
 	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public Article getArticleById(@PathVariable int Id) {
+	public Article getArticleById(@PathVariable int id) {
 		System.out.println("[DEBUG] - In ArticleController.getArticleById()...");
-	    Article article = articleService.getById(Id);	
+	    Article article = articleService.getById(id);	
 	    
 	    if(article == null) {
 	    	return null;//throw error here
