@@ -168,6 +168,15 @@ public class Article implements Serializable {
 		favorites.add(favorite);
 	}
 
+	// Add Rating
+	public void addRating(Rating rating) {
+		if (this.ratings == null) {
+			ratings = new ArrayList<>();
+		}
+		
+		ratings.add(rating);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

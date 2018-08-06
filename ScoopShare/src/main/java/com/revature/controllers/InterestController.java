@@ -66,7 +66,8 @@ public class InterestController {
 		System.out.println("newInterest[0]: " + newInterest[0] + " and newInterest[1]: " + newInterest[1]);
 		interestService.addInterest(interest);
 		
-		List<Interest> allUserInterest = userService.addInterest(interest, user);
+		//List<Interest> allUserInterest = 
+		userService.addInterest(interest, user);
 		
 		return new ResponseEntity<Interest>(interest, HttpStatus.CREATED); 
 		//return allUserInterest;

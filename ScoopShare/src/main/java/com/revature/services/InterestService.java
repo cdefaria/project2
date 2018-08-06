@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 //import com.revature.beans.Article;
 import com.revature.beans.Interest;
-import com.revature.beans.User;
+//import com.revature.beans.User;
 import com.revature.repositories.InterestRepository;
 
 @Service

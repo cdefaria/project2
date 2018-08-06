@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Article;
 import com.revature.beans.UserComment;
+import com.revature.beans.Rating;
 import com.revature.repositories.ArticleRepository;
 
 @Service
@@ -44,5 +45,9 @@ public class ArticleService {
 	public UserComment addComment(Article article, UserComment comment) {
 		System.out.println("[DEBUG] - In ArticleService.addComment...");
 		return articleRepo.addComment(article, comment);
+	}
+	public Rating addRating(Article article, Rating rating) {
+		System.out.println("[DEBUG] - In RatingService.addRating...");
+		return articleRepo.addRating(article, rating);
 	}
 }
