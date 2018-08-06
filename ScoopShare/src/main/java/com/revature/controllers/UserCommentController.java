@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import com.revature.services.UserService;
 // don't send back vague codes such as: 200, 300, 400, and 500 if it can be avoided.
 // user plural when giving value to RequestMapping
 // 201- created
+@CrossOrigin
 @RestController
 @RequestMapping(value="/comments")
 public class UserCommentController {
@@ -57,6 +59,16 @@ public class UserCommentController {
 	    }
 	    
 	    return userComment;
+	}
+	
+	@GetMapping(value="article-{articleId}",produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<UserComment>> getCommentsByArticleId(@PathVariable int articleId) {
+		System.out.println("[DEBUG] - In UserCommentController.getCommentsByUserId()...");
+		List<UserComment> comments = userCommentService.getCommentsByArticleId(articleId);
+		if(comments == null) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+		return new ResponseEntity<List<UserComment>>(comments,HttpStatus.OK);
 	}
 	
 	// 

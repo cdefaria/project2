@@ -1,5 +1,6 @@
 package com.revature.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Hibernate;
@@ -84,6 +85,28 @@ public class UserCommentRepository {
 		
 		userComment = updatedUserComment;
 		return userComment;
+	}
+	
+	public List<UserComment> getCommentsByArticleId(int articleId) {
+
+		System.out.println("[DEBUG] - In UserRepository.getCommentsByUserId()...");
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Article currentUser = currentSession.get(Article.class, articleId);
+		
+		if(currentUser == null) {
+			return null;
+		}
+		
+		Hibernate.initialize(currentUser.getUserComments());
+		
+		List<UserComment> comments = currentUser.getUserComments();
+		
+		if(comments == null) {
+			comments = new ArrayList<UserComment>();
+		}
+		
+		return comments;
 	}
 	
 	public List<UserComment> getAllUserComments(int id) {
