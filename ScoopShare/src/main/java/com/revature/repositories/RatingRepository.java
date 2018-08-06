@@ -76,7 +76,7 @@ public class RatingRepository {
 			return rating;
 		}
 
-		rating = updatedRating;
+		rating.setRating(updatedRating.getRating());
 		return rating;
 	}
 
