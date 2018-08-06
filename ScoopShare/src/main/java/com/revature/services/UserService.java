@@ -66,8 +66,8 @@ public class UserService {
 	
 	public int sendEmail(String[] values) {
 		EmailUtility email = new EmailUtility();
-		email.setTo(values[0]);
-		email.setFrom(values[1]);
+		email.setFrom(values[0]);
+		email.setTo(values[1]);
 		email.setSubject(values[2]);
 		email.setBody(values[3]);
 		try {
