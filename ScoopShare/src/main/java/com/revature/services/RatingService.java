@@ -32,10 +32,10 @@ public class RatingService {
 		return ratingRepo.getById(Id);
 	}
 	
-	public Rating addRating(Rating newRating) {
-		System.out.println("[DEBUG] - In RatingService.addArticle()...");
-		return ratingRepo.addRating(newRating);
-	}
+//	public Rating addRating(Rating newRating) {
+//		System.out.println("[DEBUG] - In RatingService.addArticle()...");
+//		return ratingRepo.addRating(newRating);
+//	}
 	
 	public Rating updateRating(Rating updatedRating) {
 		System.out.println("[DEBUG] - In RatingService.updatedRating()...");
@@ -51,5 +51,15 @@ public class RatingService {
 		} else {
 			return ratingRepo.getByArticleId(articleId);
 		}
+	}
+	
+	public Rating addRating(float rating, int articleId, int userId) {
+		System.out.println("[DEBUG] - In RatingService.addRating()...");
+		return ratingRepo.addRating(rating, articleId, userId);
+	}
+
+	public List<Rating> getAllRatings(int id) {
+		System.out.println("[DEBUG] - In RatingService()...");
+		return ratingRepo.getAllRatings(id);
 	}
 }

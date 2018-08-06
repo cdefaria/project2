@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Article;
 import com.revature.beans.Interest;
+import com.revature.beans.Rating;
 import com.revature.beans.User;
 import com.revature.repositories.UserRepository;
 
@@ -54,5 +55,10 @@ public class UserService {
 	public List<Article> getFavorites(int userId) {
 		System.out.println("[DEBUG] - In UserService.getFavorites()...");
 		return userRepo.getFavorites(userId);
+	}
+	
+	public Rating addRating(User user, Rating rating) {
+		System.out.println("[DEBUG] - In UserService.addRating");
+		return userRepo.addRating(user, rating);
 	}
 }

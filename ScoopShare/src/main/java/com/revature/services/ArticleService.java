@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.beans.Article;
+import com.revature.beans.Rating;
 import com.revature.repositories.ArticleRepository;
 
 @Service
@@ -38,5 +39,10 @@ public class ArticleService {
 	public Article updateArticle(Article updatedArticle) {
 		System.out.println("[DEBUG] - In ArticleService.updatedArticle()...");
 		return articleRepo.updateArticle(updatedArticle);
+	}
+	
+	public Rating addRating(Article article, Rating rating) {
+		System.out.println("[DEBUG] - In RatingService.addRating...");
+		return articleRepo.addRating(article, rating);
 	}
 }
